@@ -22,11 +22,12 @@ Start with two tables **movies** & **genres**. When base features are complete, 
 - Feel free to deviate from this list and add features of your own
 
 
-- [] install node express, pg, and angularjs
+- [x] install node express, pg, and angularjs
 
-- [] set up base file structure
+- [x] set up base file structure
 
 - [] set up database and table structure
+    - [x] create database
 
 - [] source needed files in to index.html
 
