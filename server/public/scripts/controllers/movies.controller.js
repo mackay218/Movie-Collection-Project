@@ -16,8 +16,6 @@ movieApp.controller('MoviesController', ['$http', function($http){
     /* create array to hold genre objects: name and id number from database
         if genre array is empty set variable to hide show select to hide select
         and show input for new genre */
-
-
     //POST
     self.addMovie = function(movieObj, releaseDate){
         console.log('in addMovie');
@@ -37,7 +35,8 @@ movieApp.controller('MoviesController', ['$http', function($http){
             title: movieObj.title,
             release_date: self.date_of_release,
             run_time: movieObj.run_time,
-            genre: movieObj.genre
+            genre: movieObj.genre,
+            genrePicker: self.isShown
             //img url:
         }
 
