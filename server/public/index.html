@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/styles.css" />
     <script src="vendors/angular.min.js"></script>
-    <script src="vendors/angular-route.min.js"></script>
+    <script src="vendors/angular-route.js"></script>
     
     <!-- Angular Material -->
     <link href="vendors/angular-material.css" rel="stylesheet" type="text/css">
@@ -17,10 +17,16 @@
     <title>Movie Collection</title>
     <!-- local script -->
     <script src="scripts/client.js"></script>
+    <script src="scripts/controllers/movies.controller.js"></script>
+    <script src="scripts/controllers/genres.controller.js"></script>
 </head>
 <body ng-app="movieApp">
     <!--banner-->
     <h1>Movie Collection</h1>
+    <nav>
+        <li><a href="/">Movies</a></li>
+        <li><a href="#!/genres">Genres</a></li>
+    </nav>
     <!--navigation-->
     <ng-view></ng-view>
 </body>
