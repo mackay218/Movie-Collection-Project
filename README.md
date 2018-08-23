@@ -26,8 +26,14 @@ Start with two tables **movies** & **genres**. When base features are complete, 
 
 - [x] set up base file structure
 
-- [] set up database and table structure
+- [x] set up database and table structure
     - [x] create database
+    - [x] create tables
+        - [x] movies table
+            - info needed: id, name, genre_id, release_date 
+        - [x] genres table
+            - info needed: id, name
+- [ ] JOINS: movies view to get genre name, genres view to get count of movies per                 genre
 
 - [] source needed files in to index.html
 
