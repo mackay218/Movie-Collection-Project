@@ -22,8 +22,23 @@ movieApp.controller('MoviesController', ['$http', function($http){
     self.addMovie = function(movieObj, releaseDate){
         console.log('in addMovie');
 
-        console.log('movieObj', movieObj);
-        console.log('releaseDate', releaseDate);
+        //variable to hold formated date
+        self.date_of_release = '';
+
+        //function to format date
+        function formatDate(value) {
+            self.date_of_release = value.getMonth() + 1 + "/" + value.getDate() + "/" + value.getYear();
+        }
+
+        formatDate(releaseDate);
+
+        console.log(self.date_of_release);
+
+        const movie = {
+            title: movieObj.title,
+            release_date: self.date_of_release,
+            run_time:
+        }
 
     }
 

@@ -15,7 +15,8 @@
                 <!--angular material date picker-->
                     <md-datepicker ng-model="vm.myDate" 
                         md-current-view="year" 
-                        md-placeholder="Enter date"></md-datepicker>
+                        md-placeholder="Enter date"
+                        ></md-datepicker>
             </div>
             <div class="formSection">
                 <label for="#runTime">Run Time (min)</label>
@@ -27,7 +28,7 @@
                     <div class="inputChoice" ng-show="vm.isShown">
                         <label for="#genrePicker">Genre</label>
                         <select id="genrePicker" ng-model="vm.movieToAdd.genre">
-                            <option value="">Please select</option>
+                            <option disabled value="">Please select</option>
                             <option ng-repeat="genre in vm.genresArr">{{genre.name}}</option>
                         </select>
                         <p>OR</p>
