@@ -22,6 +22,15 @@ Start with two tables **movies** & **genres**. When base features are complete, 
 - Feel free to deviate from this list and add features of your own
 
 - favorites database and view
+- dynamically add individual movie pages
+    - possibley easier to do modals
+
+- 3rd view html page for search function, search all movies or limit to genre, seach    by name, release date or run time
+
+- sort all movies page by release date, run time, alphabetical order etc.
+
+
+## CHECKLIST
 
 - [x] install node express, pg, and angularjs
 
