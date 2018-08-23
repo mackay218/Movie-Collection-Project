@@ -47,6 +47,8 @@ Start with two tables **movies** & **genres**. When base features are complete, 
 
 - [] source needed files in to index.html
 
+- [x] set up client side config and routing
+
 - [] build html for each view
 
 - [] set up get and post routes

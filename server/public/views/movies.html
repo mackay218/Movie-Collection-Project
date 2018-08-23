@@ -1,7 +1,56 @@
 <div class="container">
-    <h2>Movies</h2>
+    <h2>All Movies</h2>
     <!--form for movie input-->
         <!--ability to add new genre or pick from existing genres:
                 show/hide text input/ select option dropdown-->
+    <div class="formContainer">
+        <form>
+            <h3>Add Movie</h3>
+            <div class="formSection">
+                <label for="#movieTitle">Title</label>
+                <input id="movieTitle" type="text" placeholder="e.g. Almost Famous" />
+            </div>
+            <div class="formSection">
+                <label for="#releaseDate">Release Date</label>
+                <!--angular material date picker-->
+                    <md-datepicker ng-model="vm.myDate" 
+                        md-current-view="year" 
+                        md-placeholder="Enter date"></md-datepicker>
+            </div>
+            <div class="formSection">
+                <label for="#runTime">Run Time (min)</label>
+                <input id="runTime" type="number" step="1.00" placeholder="120 min"/>
+            </div>
+            <div class="formSection">
+                <label for="#genrePicker">Genre</label>
+                <div class="genrePickContainer">
+                    <!--drop down -->
+                    <div class="inputChoice" ng-show="vm.isShown">
+                        <select>
+                            <option value="">---Please select---</option>
+                            <option ng-repeat="genre in vm.genresArr">{{genre.name}}</option>
+                        </select>
+                        <p>OR</p>
+                        <button type="button" 
+                                ng-click="vm.isShown = !vm.isShown" 
+                                ng-init="vm.isShown = true">
+                                Add New Genre
+                        </button>
+                    </div>
+                    <div class="inputChoice" ng-hide="vm.isShown">
+                        <!-- add new genre-->
+                        <label for="#newGenre">New Genre</label>
+                        <input id="newGenre" type="text" placeholder="mystery" />
+                        <p>OR</p>
+                        <button type="button" 
+                                 ng-click="vm.isShown = !vm.isShown" 
+                                 ng-init="vm.isShown = true">
+                                 Select Existing Genre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>                
     <!--movie cards containers-->
 </div>

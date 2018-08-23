@@ -1,6 +1,6 @@
 console.log('js');
 
-const movieApp = angular.module('movieApp', ['ngRoute']);
+const movieApp = angular.module('movieApp', ['ngRoute', 'ngMaterial', 'ngMessages']);
 
 //config
 movieApp.config(['$routeProvider', function($routeProvider) {
