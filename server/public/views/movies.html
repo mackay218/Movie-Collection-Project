@@ -4,11 +4,11 @@
         <!--ability to add new genre or pick from existing genres:
                 show/hide text input/ select option dropdown-->
     <div class="formContainer">
-        <form>
+        <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate)">
             <h3>Add Movie</h3>
             <div class="formSection">
                 <label for="#movieTitle">Title</label>
-                <input id="movieTitle" type="text" placeholder="e.g. Almost Famous" />
+                <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" />
             </div>
             <div class="formSection">
                 <label for="#releaseDate">Release Date</label>
@@ -19,15 +19,15 @@
             </div>
             <div class="formSection">
                 <label for="#runTime">Run Time (min)</label>
-                <input id="runTime" type="number" step="1.00" placeholder="120 min"/>
+                <input ng-model="vm.movieToAdd.run_time" id="runTime" type="number" step="1.00" placeholder="120 min"/>
             </div>
             <div class="formSection">
-                <label for="#genrePicker">Genre</label>
                 <div class="genrePickContainer">
                     <!--drop down -->
                     <div class="inputChoice" ng-show="vm.isShown">
-                        <select>
-                            <option value="">---Please select---</option>
+                        <label for="#genrePicker">Genre</label>
+                        <select id="genrePicker" ng-model="vm.movieToAdd.genre">
+                            <option value="">Please select</option>
                             <option ng-repeat="genre in vm.genresArr">{{genre.name}}</option>
                         </select>
                         <p>OR</p>
@@ -40,7 +40,7 @@
                     <div class="inputChoice" ng-hide="vm.isShown">
                         <!-- add new genre-->
                         <label for="#newGenre">New Genre</label>
-                        <input id="newGenre" type="text" placeholder="mystery" />
+                        <input ng-model="vm.movieToAdd.genre" id="newGenre" type="text" placeholder="mystery" />
                         <p>OR</p>
                         <button type="button" 
                                  ng-click="vm.isShown = !vm.isShown" 
@@ -49,6 +49,9 @@
                         </button>
                     </div>
                 </div>
+            </div>
+            <div class="formSection">
+                <button>Submit</button>
             </div>
         </form>
     </div>                

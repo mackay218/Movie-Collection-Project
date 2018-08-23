@@ -15,7 +15,18 @@ movieApp.controller('MoviesController', ['$http', function($http){
 
     /* create array to hold genre objects: name and id number from database
         if genre array is empty set variable to hide show select to hide select
-        and show text input for new genre */
+        and show input for new genre */
+
+
+    //POST
+    self.addMovie = function(movieObj, releaseDate){
+        console.log('in addMovie');
+
+        console.log('movieObj', movieObj);
+        console.log('releaseDate', releaseDate);
+
+    }
+
 
      
 }]);//end movies controller     
