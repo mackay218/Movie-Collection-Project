@@ -21,6 +21,7 @@ Start with two tables **movies** & **genres**. When base features are complete, 
 - Ability to favorite a movie and display favorites on a separate route
 - Feel free to deviate from this list and add features of your own
 
+- favorites database and view
 
 - [x] install node express, pg, and angularjs
 
@@ -30,10 +31,10 @@ Start with two tables **movies** & **genres**. When base features are complete, 
     - [x] create database
     - [x] create tables
         - [x] movies table
-            - info needed: id, name, genre_id, release_date 
+            - info needed: id, name, genre_id, ,run_time, release_date 
         - [x] genres table
             - info needed: id, name
-- [ ] JOINS: movies view to get genre name, genres view to get count of movies per                 genre
+- [] JOINS: movies view to get genre name, genres view to get count of movies per                 genre
 
 - [] source needed files in to index.html
 
