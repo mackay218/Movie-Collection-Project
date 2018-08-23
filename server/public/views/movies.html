@@ -8,7 +8,7 @@
             <h3>Add Movie</h3>
             <div class="formSection">
                 <label for="#movieTitle">Title</label>
-                <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" />
+                <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" required/>
             </div>
             <div class="formSection">
                 <label for="#releaseDate">Release Date</label>
@@ -20,14 +20,14 @@
             </div>
             <div class="formSection">
                 <label for="#runTime">Run Time (min)</label>
-                <input ng-model="vm.movieToAdd.run_time" id="runTime" type="number" step="1.00" placeholder="120 min"/>
+                <input ng-model="vm.movieToAdd.run_time" id="runTime" type="number" step="1.00" placeholder="120 min" required/>
             </div>
             <div class="formSection">
                 <div class="genrePickContainer">
                     <!--drop down -->
                     <div class="inputChoice" ng-show="vm.isShown">
                         <label for="#genrePicker">Genre</label>
-                        <select id="genrePicker" ng-model="vm.movieToAdd.genre">
+                        <select id="genrePicker" ng-model="vm.movieToAdd.genre" required>
                             <option disabled value="">Please select</option>
                             <option ng-repeat="genre in vm.genresArr">{{genre.name}}</option>
                         </select>
@@ -41,7 +41,7 @@
                     <div class="inputChoice" ng-hide="vm.isShown">
                         <!-- add new genre-->
                         <label for="#newGenre">New Genre</label>
-                        <input ng-model="vm.movieToAdd.genre" id="newGenre" type="text" placeholder="mystery" />
+                        <input ng-model="vm.movieToAdd.genre" id="newGenre" type="text" placeholder="mystery" required/>
                         <p>OR</p>
                         <button type="button" 
                                  ng-click="vm.isShown = !vm.isShown" 

@@ -27,20 +27,38 @@ movieApp.controller('MoviesController', ['$http', function($http){
 
         //function to format date
         function formatDate(value) {
-            self.date_of_release = value.getMonth() + 1 + "/" + value.getDate() + "/" + value.getYear();
+            self.date_of_release = value.getMonth() + 1 + "/" + value.getDate() + "/" + value.getFullYear();
+            
         }
 
         formatDate(releaseDate);
 
-        console.log(self.date_of_release);
-
         const movie = {
             title: movieObj.title,
             release_date: self.date_of_release,
-            run_time:
+            run_time: movieObj.run_time,
+            genre: movieObj.genre
+            //img url:
         }
 
-    }
+        console.log(movie);
+
+        //make sure genre input
+        if(movieObj.genre.length > 0){
+            /*$http({
+                method: 'POST',
+                url: '/movies',
+                data: movie
+            }).then(function (response) {
+                console.log('added movie!');
+            }).catch(function (error) {
+                console.log('error in post:', error);
+
+            });*/
+        }
+
+      
+    }//end addMovie
 
 
      
