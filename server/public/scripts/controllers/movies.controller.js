@@ -45,7 +45,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
 
         //make sure genre input
         if(movieObj.genre.length > 0){
-            /*$http({
+            $http({
                 method: 'POST',
                 url: '/movies',
                 data: movie
@@ -53,10 +53,11 @@ movieApp.controller('MoviesController', ['$http', function($http){
                 console.log('added movie!');
             }).catch(function (error) {
                 console.log('error in post:', error);
-
-            });*/
+            });
         }
-
+        else{
+            alert('please choose a genre');
+        }
       
     }//end addMovie
 

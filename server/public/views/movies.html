@@ -27,7 +27,7 @@
                     <!--drop down -->
                     <div class="inputChoice" ng-show="vm.isShown">
                         <label for="#genrePicker">Genre</label>
-                        <select id="genrePicker" ng-model="vm.movieToAdd.genre" required>
+                        <select name="genreSelect" id="genrePicker" ng-model="vm.movieToAdd.genre" required>
                             <option disabled value="">Please select</option>
                             <option ng-repeat="genre in vm.genresArr">{{genre.name}}</option>
                         </select>

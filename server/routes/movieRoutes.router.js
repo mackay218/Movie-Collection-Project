@@ -22,7 +22,15 @@ pool.on('error', (error) => {
 
 //POST 
 /* route to post movie to database */
+router.post('/', (req,res) => {
+    console.log('in post movies');
 
+    const movie = req.body;
+    console.log(movie);
+
+    
+
+});
 
 
 
