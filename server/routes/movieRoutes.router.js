@@ -44,14 +44,32 @@ router.post('/', (req,res) => {
                 let newGenreID = '';
 
                 pool.query(getGenreID, [movie.genre])
-                .then((secondResult) => {
-                    newGenreID = secondResult.rows[0].id;
-                    //console.log(secondResult.rows[0].id);
-                }).catch((secondError) => {
-                    console.log('error getting genre id from add movie', secondError);
-                });
+                    .then((secondResult) => {
+                        newGenreID = secondResult.rows[0].id;
+                        //console.log(secondResult.rows[0].id);
 
-                res.sendStatus(201);
+                        /* quey to add new movie with new genre */
+                        //ADD IMG URL LATER
+                        const addMovieQuery = `INSERT INTO "movies" ("name", "release_date",
+                                                "run_time", "genre_id") VALUES 
+                                                ($1, $2, $3, $4);`;
+
+                        pool.query(addMovieQuery, [movie.title, movie.release_date, 
+                                                    movie.run_time, newGenreID])
+                            .then((thirdResult) => {
+                                console.log('movie and genre added');
+                                res.sendStatus(201);
+                                
+                            }).catch((thirdError) => {
+                                console.log('error adding movie and new genre', error);
+                                res.sendStatus(500);
+                            });
+
+                    }).catch((secondError) => {
+                        console.log('error getting genre id from add movie', secondError);
+                        res.sendStatus(500);
+                    });
+
             }).catch((error) => {
                 console.log('error in genre post from addMovie', error);
                 res.sendStatus(500);
@@ -59,7 +77,20 @@ router.post('/', (req,res) => {
 
     }
     else{
-
+        //ADD IMG URL LATER
+        const queryText = `INSERT INTO "movies" ("name", "release_date",
+                                                "run_time", "genre_id") VALUES 
+                                                ($1, $2, $3, $4);`;
+        pool.query(queryText, [movie.name, movie.release_date, movie.run_time, 
+                                movie.genre])
+            .then((result) => {
+                console.log('added new movie');
+                res.sendStatus(201);
+            })
+            .catch((error) => {
+                console.log('error in adding ONLY new movie:', error);
+                res.sendStatus(500);
+            });                                               
     }
 
     //else if genre is a number run post route to movies table
@@ -68,7 +99,7 @@ router.post('/', (req,res) => {
 
 
 
-/* route to post genre to database */
+
 
 //DELETE 
 /* route to remove movie from database */
