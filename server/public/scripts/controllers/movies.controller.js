@@ -13,11 +13,6 @@ movieApp.controller('MoviesController', ['$http', function($http){
     }
     getDate();
 
-    //function to clear add genre text input
-    self.clearGenreInput = function(){
-        self.movieToAdd.genre = '';
-    }
-
     /* create array to hold genre objects: name and id number from database
         if genre array is empty set variable to hide show select to hide select
         and show input for new genre */
@@ -25,20 +20,11 @@ movieApp.controller('MoviesController', ['$http', function($http){
     self.addMovie = function(movieObj, releaseDate){
         console.log('in addMovie');
 
-        //variable to hold formated date
-        self.date_of_release = '';
-
-        //function to format date
-        function formatDate(value) {
-            self.date_of_release = value.getMonth() + 1 + "/" + value.getDate() + "/" + value.getFullYear();
-            
-        }
-
-        formatDate(releaseDate);
+        console.log('releaseDate', releaseDate);
 
         const movie = {
             title: movieObj.title,
-            release_date: self.date_of_release,
+            release_date: releaseDate,
             run_time: movieObj.run_time,
             genre: movieObj.genre,
             genrePicker: self.isShown

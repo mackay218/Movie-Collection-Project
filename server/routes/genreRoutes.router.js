@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-console.log('in movie router');
+console.log('in genre router');
 
 const pool = require('../modules/pool.js');
 
@@ -31,6 +31,11 @@ router.get('/', (req, res) => {
         });
 });
 
+router.get('/', (req, res) => {
+    console.log('in get genres count');
+
+    const getGenreCountQuery = `SELECT * FROM `
+});
 /* route to post genre to database */
 
 /*route to remove all movies matching genre id */

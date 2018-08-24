@@ -33,7 +33,7 @@
                         </select>
                         <p>OR</p>
                         <button type="button" 
-                                ng-click="vm.isShown = !vm.isShown; vm.clearGenreInput()" 
+                                ng-click="vm.isShown = !vm.isShown; vm.movieToAdd.genre = '' "
                                 ng-init="vm.isShown = true">
                                 Add New Genre
                         </button>
@@ -44,7 +44,7 @@
                         <input ng-model="vm.movieToAdd.genre" id="newGenre" type="text" placeholder="mystery" required/>
                         <p>OR</p>
                         <button type="button" 
-                                 ng-click="vm.isShown = !vm.isShown" 
+                                 ng-click="vm.isShown = !vm.isShown; vm.movieToAdd.genre = ''" 
                                  ng-init="vm.isShown = true">
                                  Select Existing Genre
                         </button>
@@ -72,7 +72,7 @@
                 <img class="moviePic" src="{{movie.image_url}}">
                 <div class="cardInfo">
                     <p>{{movie.title}}</p>
-                    <p> released: {{movie.release_date}}</p>
+                    <p> released: {{movie.release_date | date}}</p>
                     <p> run time: {{movie.run_time}}min</p>
                     <p>{{movie.name}}</p>
                 </div>
