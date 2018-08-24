@@ -44,6 +44,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
                 self.movieToAdd = {};
             }).catch(function (error) {
                 console.log('error in post:', error);
+                self.movieToAdd = {};
             });
         }
         else{

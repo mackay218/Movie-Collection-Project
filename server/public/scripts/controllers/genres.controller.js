@@ -19,6 +19,7 @@ movieApp.controller('GenresController', ['$http', function ($http) {
         })
         .catch(function(error){
             console.log('error posting genre:', error);
+            self.genreToAdd = {};
         });
         
         
