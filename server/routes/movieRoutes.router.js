@@ -49,47 +49,111 @@ router.post('/', (req,res) => {
         and then run post route to movies table */
     if(isNaN(movie.genre) && movie.genrePicker == false){
 
-        const genreQueryText = `INSERT INTO "genre" ("name") VALUES ($1);`;
+        /* check to make sure genres don't double */
+        const getAllGenres = `SELECT name FROM "genre";`;
 
-        pool.query(genreQueryText, [movie.genre])
-            .then((result) => {
-                /*query to get back id for new genre added */
+        //convert all genres to lowercase
+        const newGenre = movie.genre.toLowerCase();
 
-                const getGenreID = `SELECT id FROM "genre" WHERE "name" = ($1);`;
 
-                let newGenreID = '';
+        pool.query(getAllGenres)
+            .then((results) => {
+                console.log('results:', results.rows);
 
-                pool.query(getGenreID, [movie.genre])
-                    .then((secondResult) => {
-                        newGenreID = secondResult.rows[0].id;
-                        //console.log(secondResult.rows[0].id);
+                const genreArr = [];
 
-                        /* quey to add new movie with new genre */
-                        //ADD IMG URL LATER
-                        const addMovieQuery = `INSERT INTO "movies" ("name", "release_date",
+                for(name of results.rows){
+                    genreArr.push(name.name);
+                }
+                
+                //check if genre already exists
+                if(genreArr.includes(newGenre)){
+                    console.log('genre already in database');
+
+                    //query to get id of matching existing genre
+                    const getGenreID = `SELECT id FROM "genre" WHERE "name" = ($1);`;
+
+                    pool.query(getGenreID, [newGenre])
+                        .then((result) => {
+
+                            let genreID = '';
+
+                            genreID = result.rows[0].id;
+
+                            //query to add movie 
+                            //ADD IMG URL LATER
+                            const addMovieQuery = `INSERT INTO "movies" ("name", "release_date",
                                                 "run_time", "genre_id") VALUES 
                                                 ($1, $2, $3, $4);`;
 
-                        pool.query(addMovieQuery, [movie.title, movie.release_date, 
-                                                    movie.run_time, newGenreID])
-                            .then((thirdResult) => {
-                                console.log('movie and genre added');
-                                res.sendStatus(201);
-                                
-                            }).catch((thirdError) => {
-                                console.log('error adding movie and new genre', error);
-                                res.sendStatus(500);
-                            });
+                            pool.query(addMovieQuery, [movie.title, movie.release_date,
+                            movie.run_time, genreID])
+                                .then((result) => {
+                                    console.log('movie and genre added');
+                                    res.sendStatus(201);
 
-                    }).catch((secondError) => {
-                        console.log('error getting genre id from add movie', secondError);
-                        res.sendStatus(500);
-                    });
+                                }).catch((error) => {
+                                    console.log('error adding movie and new genre', error);
+                                    res.sendStatus(500);
+                                });
 
-            }).catch((error) => {
-                console.log('error in genre post from addMovie', error);
+                        });
+                        
+                        
+
+                }
+                //add new genre and new movie
+                else{
+                    //query to add new genre
+                    const genreQueryText = `INSERT INTO "genre" ("name") VALUES ($1);`;
+
+                    pool.query(genreQueryText, [newGenre])
+                        .then((result) => {
+
+                            //query to get back id for new genre added 
+                            const getGenreID = `SELECT id FROM "genre" WHERE "name" = ($1);`;
+
+                            let newGenreID = '';
+ 
+                            pool.query(getGenreID, [newGenre])
+                                .then((secondResult) => {
+                                    newGenreID = secondResult.rows[0].id;
+                                    
+                                    //query to add new movie with new genre 
+                                    //ADD IMG URL LATER
+                                    const addMovieQuery = `INSERT INTO "movies" ("name", "release_date",
+                                                "run_time", "genre_id") VALUES 
+                                                ($1, $2, $3, $4);`;
+
+                                    pool.query(addMovieQuery, [movie.title, movie.release_date,
+                                    movie.run_time, newGenreID])
+                                        .then((result) => {
+                                            console.log('movie and genre added');
+                                            res.sendStatus(201);
+
+                                        }).catch((error) => {
+                                            console.log('error adding movie and new genre', error);
+                                            res.sendStatus(500);
+                                        });
+
+                                }).catch((error) => {
+                                    console.log('error getting genre id from add movie', error);
+                                    res.sendStatus(500);
+                                });
+
+                        }).catch((error) => {
+                            console.log('error in genre post from addMovie', error);
+                            res.sendStatus(500);
+                        }); 
+                }
+            })
+            .catch((error) => {
+                console.log('error getting all genres:', error);
                 res.sendStatus(500);
             });
+
+       
+            
 
     }
     else{
@@ -97,7 +161,7 @@ router.post('/', (req,res) => {
         const queryText = `INSERT INTO "movies" ("name", "release_date",
                                                 "run_time", "genre_id") VALUES 
                                                 ($1, $2, $3, $4);`;
-        pool.query(queryText, [movie.name, movie.release_date, movie.run_time, 
+        pool.query(queryText, [movie.title, movie.release_date, movie.run_time, 
                                 movie.genre])
             .then((result) => {
                 console.log('added new movie');
