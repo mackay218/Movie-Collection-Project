@@ -4,7 +4,9 @@
                 show/hide text input/ select option dropdown-->
     <div class="formContainer">
         <h3>Add Movie</h3>
-        <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate)">   
+        <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate, userForm$valid)" name="userForm" 
+            ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }" 
+            novalidate>   
             <div class="formSection">
                 <label for="#movieTitle">Title</label>
                 <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" required/>
@@ -31,27 +33,27 @@
                             <option ng-repeat="genre in vm.genresArr" value="{{genre.id}}">{{genre.name}}</option>
                         </select>
                         <p>OR</p>
-                        <button type="button" 
+                        <md-button class="md-raised" type="button" 
                                 ng-click="vm.isShown = !vm.isShown; vm.movieToAdd.genre = '' "
                                 >
                                 Add New Genre
-                        </button>
+                        </md-button>
                     </div>
                     <div class="inputChoice" ng-hide="vm.isShown">
                         <!-- add new genre-->
                         <label for="#newGenre">New Genre</label>
                         <input ng-model="vm.movieToAdd.genre" id="newGenre" type="text" placeholder="mystery" required/>
                         <p>OR</p>
-                        <button type="button" 
+                        <md-button type="button" class="md-raised"
                                  ng-click="vm.isShown = !vm.isShown; vm.movieToAdd.genre = ''" 
                                  >
                                  Select Existing Genre
-                        </button>
+                        </md-button>
                     </div>
                 </div>
             </div>
             <div class="submitSection">
-                <button>Submit</button>
+                <md-button ng-click="vm.addMovie(vm.movieToAdd, vm.myDate, userForm$valid)" class="md-raised md-primary" ng-disabled="userForm.$invalid">Submit</md-button>
             </div>
         </form>
     </div> 

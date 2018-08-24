@@ -2,9 +2,13 @@
     <h2>Genres</h2>
     <!--form for adding genre-->
     <div class="formContainer">
-        <form ng-submit="vm.addGenre(vm.genreToAdd)">
-            <input ng-model="vm.genreToAdd.name" type="text" placeholder="e.g. comedy"/>
-            <button id="submitGenreBtn">Submit</button>
+        <form ng-submit="vm.addGenre(vm.genreToAdd, userForm$valid)" name="userForm"
+             ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }"
+             novalidate>
+            <input ng-model="vm.genreToAdd.name" type="text" placeholder="e.g. comedy" required/>
+            <button id="submitGenreBtn" 
+                ng-disabled="userForm.$invalid"
+                class="md-raised md-primary">Submit</button>
         </form>
     </div>
     <!--table of genres with count of movies-->
@@ -21,8 +25,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="genre in vm.genreCountArr">
-                    <td>{{genre.name}}</td>
-                    <td>{{genre.count}}</td>
+                    <td class="genreInfo">{{genre.name}}</td>
+                    <td class="genreInfo">{{genre.count}}</td>
                     <td class="deleteCell">
                         <button class="genreDeleteBtn" 
                             ng-click="genre.isHidden = !genre.isHidden">

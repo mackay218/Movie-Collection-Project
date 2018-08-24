@@ -6,6 +6,11 @@
 body, html{
     padding: 0;
     margin: 0;
+    background: linear-gradient(to bottom, #eab63f, #FFD166, #FFDD90);
+}
+
+body{
+    height: 100%;
 }
 
 a{
@@ -41,9 +46,8 @@ li{
     margin: 10px;
 }
 
-.tableContsiner td{
-    width: 33%;
-    height: 30px;
+md-datepicker{
+    background-color: #fff;
 }
 
 .formSection{
@@ -78,6 +82,7 @@ li{
     flex-wrap: nowrap;
     justify-content: space-between;
     overflow-x: scroll;
+    border: 1px solid black;
 }
 
 .movieCard{
@@ -87,6 +92,8 @@ li{
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: 1px solid black;
+    margin: 5px;
 }
 
 .movieCard p{
@@ -131,7 +138,6 @@ li{
 }
 
 .deleteGenreBox{
-    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -149,15 +155,26 @@ li{
     z-index: 2;;
 }
 
+
 .tableContainer{
     width: 100%;
     display: flex;
     justify-content: center;
+    border: 1px solid black;
 }
 
 .tableContainer table{
     width: 90%;
 }
+
+.tableContainer td{
+    height: 30px;
+}
+
+.genreInfo{
+    text-align: center;
+}
+
 
 #newGenre{
     width: 100%;
