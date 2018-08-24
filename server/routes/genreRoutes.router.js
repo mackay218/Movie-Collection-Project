@@ -34,7 +34,19 @@ router.get('/', (req, res) => {
 router.get('/', (req, res) => {
     console.log('in get genres count');
 
-    const getGenreCountQuery = `SELECT * FROM `
+    const getGenreCountQuery = `SELECT * FROM "movies" JOIN "genre" 
+                                ON "genre"."id" = "movies"."genre_id";`;
+    
+    pool.query(getGenreCountQuery)
+        .then((results) => {
+            console.log(results.rows);
+
+        })
+        .catch((error) => {
+            console.log('error getting genre count:', error);
+            res.sendStatus(500);
+        })
+
 });
 /* route to post genre to database */
 

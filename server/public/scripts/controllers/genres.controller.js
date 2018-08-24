@@ -5,7 +5,7 @@ movieApp.controller('GenresController', ['$http', function ($http) {
 
     const self = this;
 
-
+    
 
     
 

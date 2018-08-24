@@ -13,9 +13,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
     }
     getDate();
 
-    /* create array to hold genre objects: name and id number from database
-        if genre array is empty set variable to hide show select to hide select
-        and show input for new genre */
+   
     //POST
     self.addMovie = function(movieObj, releaseDate){
         console.log('in addMovie');
@@ -54,6 +52,11 @@ movieApp.controller('MoviesController', ['$http', function($http){
       
     }; //end addMovie
 
+
+     /* create array to hold genre objects: name and id number from database
+        if genre array is empty set variable to hide show select to hide select
+        and show text input for new genre */
+
     //GET
     /* function to get list of genres to populate select dropdown */
     function getGenres(){
@@ -64,7 +67,12 @@ movieApp.controller('MoviesController', ['$http', function($http){
         .then(function(response){
             console.log('genres:', response.data);
             self.genresArr = response.data;
-            self.isShown = true;
+            if(self.genresArr.length == 0){
+                self.isShown = false;
+            }
+            else{
+                self.isShown = true;
+            }
         })
         .catch(function(error){
             console.log('error getting genres for select:', error);
