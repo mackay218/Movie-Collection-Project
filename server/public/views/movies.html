@@ -4,8 +4,7 @@
                 show/hide text input/ select option dropdown-->
     <div class="formContainer">
         <h3>Add Movie</h3>
-        <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate)">
-            
+        <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate)">   
             <div class="formSection">
                 <label for="#movieTitle">Title</label>
                 <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" required/>

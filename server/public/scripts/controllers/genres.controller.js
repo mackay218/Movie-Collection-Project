@@ -1,9 +1,25 @@
-
-
 movieApp.controller('GenresController', ['$http', function ($http) {
     console.log('in GenresController');
 
     const self = this;
+
+    //POST
+    self.addGenre = function(genreToAdd){
+        console.log('in addGenre', genreToAdd);
+    
+        $http({
+            method: 'POST',
+            url: '/genres',
+            data: genreToAdd
+        })
+        .then(function(response){
+            console.log('added genre', genreToAdd);
+            getGenres();
+        })
+        .catch(function(error){
+            console.log('error posting genre:', error);
+        });
+    }; //end addGenre
 
     //GET
     function getGenres(){

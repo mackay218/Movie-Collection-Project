@@ -13,6 +13,47 @@ pool.on('error', (error) => {
     console.log('Error connecting to db', error);
 });
 
+router.post('/', (req, res) => {
+    console.log('in genre post', req.body);
+
+    /* check to make sure genres don't double */
+    const getAllGenres = `SELECT name FROM "genre";`;
+
+    //convert all genres to lowercase
+    const newGenre = req.body.name.toLowerCase();
+
+    pool.query(getAllGenres)
+    .then((results) => {
+
+        console.log('results:', results.rows);
+
+        const genreArr = [];
+
+        for (name of results.rows) {
+            genreArr.push(name.name);
+        }
+
+        if(genreArr.includes(newGenre)){
+            console.log('genre already in database');
+            res.sendStatus(200);
+        }
+        else{
+            //query to add new genre
+            const genreQueryText = `INSERT INTO "genre" ("name") VALUES ($1);`;
+
+            pool.query(genreQueryText, [newGenre])
+            .then((results) => {
+                console.log('added new genre:', newGenre);
+                res.sendStatus(200);
+            })
+            .catch((error) => {
+                console.log('error adding new genre:', error);
+                res.sendStatus(500);
+            });
+        }
+    });
+}); //end post route
+
 
 /* route to get list of genres */
 router.get('/', (req, res) => {

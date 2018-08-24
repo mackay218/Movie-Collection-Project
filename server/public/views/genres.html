@@ -1,6 +1,12 @@
 <div class="container">
     <h2>Genres</h2>
     <!--form for adding genre-->
+    <div class="formContainer">
+        <form ng-submit="vm.addGenre(vm.genreToAdd)">
+            <input ng-model="vm.genreToAdd.name" type="text" placeholder="e.g. comedy"/>
+            <button id="submitGenreBtn">Submit</button>
+        </form>
+    </div>
     <!--table of genres with count of movies-->
     <!--LATER add pagination to table-->
     <div class="tableContainer">

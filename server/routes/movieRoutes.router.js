@@ -13,7 +13,6 @@ pool.on('error', (error) => {
     console.log('Error connecting to db', error);
 });
 
-
 //GET
 /* route to get movies from database
     send back array of movie objects as one argument
@@ -116,8 +115,8 @@ router.post('/', (req,res) => {
                             let newGenreID = '';
  
                             pool.query(getGenreID, [newGenre])
-                                .then((secondResult) => {
-                                    newGenreID = secondResult.rows[0].id;
+                                .then((results) => {
+                                    newGenreID = results.rows[0].id;
                                     
                                     //query to add new movie with new genre 
                                     //ADD IMG URL LATER
@@ -127,7 +126,7 @@ router.post('/', (req,res) => {
 
                                     pool.query(addMovieQuery, [movie.title, movie.release_date,
                                     movie.run_time, newGenreID])
-                                        .then((result) => {
+                                        .then((results) => {
                                             console.log('movie and genre added');
                                             res.sendStatus(201);
 
@@ -172,7 +171,6 @@ router.post('/', (req,res) => {
     //else if genre is a number run post route to movies table
 
 }); //end post route to add movie
-
 
 //DELETE 
 /* route to remove movie from database */
