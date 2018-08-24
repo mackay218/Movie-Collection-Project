@@ -15,10 +15,13 @@ movieApp.controller('GenresController', ['$http', function ($http) {
         .then(function(response){
             console.log('added genre', genreToAdd);
             getGenres();
+            self.genreToAdd = {};
         })
         .catch(function(error){
             console.log('error posting genre:', error);
         });
+        
+        
     }; //end addGenre
 
     //GET

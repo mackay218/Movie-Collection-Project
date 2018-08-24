@@ -43,16 +43,16 @@ Start with two tables **movies** & **genres**. When base features are complete, 
             - info needed: id, name, genre_id, ,run_time, release_date 
         - [x] genres table
             - info needed: id, name
-- [] JOINS: movies view to get genre name, genres view to get count of movies per                 genre
+- [x] JOINS: movies view to get genre name, genres view to get count of movies per                 genre
 
-- [] source needed files in to index.html
+- [x] source needed files in to index.html
 
 - [x] set up client side config and routing
 
-- [] build html for each view
+- [x] build html for each view
 
-- [] set up get and post routes
+- [x] set up get and post routes
 
-- [] set up delete routes
+- [x] set up delete routes
 
 - [] source pictures from google search

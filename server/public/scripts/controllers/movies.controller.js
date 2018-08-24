@@ -41,7 +41,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
                 console.log('added movie!');
                 getGenres();
                 getMovies();
-
+                self.movieToAdd = {};
             }).catch(function (error) {
                 console.log('error in post:', error);
             });
@@ -49,7 +49,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
         else{
             alert('please choose a genre');
         }
-      
+        
     }; //end addMovie
 
 
@@ -78,8 +78,6 @@ movieApp.controller('MoviesController', ['$http', function($http){
         .catch(function(error){
             console.log('error getting genres for select:', error);
         });
-
-
     } //end getGenres
      
     getGenres();
