@@ -7,4 +7,8 @@ movieApp.controller('GenresController', ['$http', function ($http) {
 
 
 
+    
+
+
+
 }]);//end genres controller  

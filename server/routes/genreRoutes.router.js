@@ -14,6 +14,22 @@ pool.on('error', (error) => {
 });
 
 
+/* route to get list of genres */
+router.get('/', (req, res) => {
+    console.log('in get genres');
+
+    const getGenresQuery = `SELECT * FROM "genre";`;
+
+    pool.query(getGenresQuery)
+        .then((results) => {
+            console.log(results.rows);
+            res.send(results.rows);
+        })
+        .catch((error) => {
+            console.log('error getting genres:', error);
+            res.sendStatus(500);
+        });
+});
 
 /* route to post genre to database */
 

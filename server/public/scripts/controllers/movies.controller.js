@@ -50,6 +50,8 @@ movieApp.controller('MoviesController', ['$http', function($http){
                 data: movie
             }).then(function (response) {
                 console.log('added movie!');
+                getGenres();
+                
             }).catch(function (error) {
                 console.log('error in post:', error);
             });
@@ -61,5 +63,24 @@ movieApp.controller('MoviesController', ['$http', function($http){
     }//end addMovie
 
 
+    function getGenres(){
+        $http({
+            method: 'GET',
+            url: '/movies'
+        })
+        .then(function(response){
+            console.log('genres:', response.data);
+            self.genresArr = response.data;
+            self.isShown = true;
+        })
+        .catch(function(error){
+            console.log('error getting genres for select:', error);
+        });
+
+
+    }//end getGenres
      
+    getGenres();
+
+
 }]);//end movies controller     
