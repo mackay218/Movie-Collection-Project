@@ -33,5 +33,6 @@ router.get('/', (req, res) => {
 
 /* route to post genre to database */
 
+/*route to remove all movies matching genre id */
 
 module.exports = router;

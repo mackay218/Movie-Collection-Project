@@ -62,13 +62,13 @@
         <!--ADD form for sorting or searching-->
         <div class="cardsContainer">
             <div class="movieCard" ng-repeat="movie in vm.moviesArr">
-                <div class="confirmBox" ng-hide="vm.isHidden" ng-init="vm.isHidden = true">
+                <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">
                     <p class="question">Delete this movie?</p>
                     <button class="yesBtn" ng-click="vm.deleteMovie(movie.id)">Yes</button>
-                    <button class="noBtn" ng-click="vm.isHidden = true">No</button>
+                    <button class="noBtn" ng-click="movie.isHidden = true">No</button>
                 </div>
                 <button class="movieDeleteBtn" 
-                    ng-click="vm.isHidden = !vm.isHidden"><i class="fas fa-times"></i></button>
+                    ng-click="movie.isHidden = !movie.isHidden"><i class="fas fa-times"></i></button>
                 <img class="moviePic" src="{{movie.image_url}}">
                 <div class="cardInfo">
                     <p>{{movie.title}}</p>

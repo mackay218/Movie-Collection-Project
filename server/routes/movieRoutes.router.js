@@ -22,8 +22,8 @@ pool.on('error', (error) => {
 router.get('/', (req, res) => {
     console.log('in get movies');
 
-    const getMoviesQuery = `SELECT * FROM "movies" JOIN "genre" 
-                            ON "movies"."genre_id" = "genre"."id";`;
+    const getMoviesQuery = `SELECT * FROM "genre" JOIN "movies" 
+                            ON "genre"."id" = "movies"."genre_id";`;
 
     pool.query(getMoviesQuery)
         .then((results) => {
@@ -34,25 +34,8 @@ router.get('/', (req, res) => {
             console.log('error getting movies:', error);
             res.sendStatus(500);
         });
-});
+}); //end get route to get movies
     
-/* route to get list of genres */
-router.get('/', (req, res) => {
-    console.log('in get genres');
-
-    const getGenresQuery = `SELECT * FROM "genre";`;
-
-    pool.query(getGenresQuery)
-        .then((results) => {
-            console.log('genres:', results.rows);
-            res.send(results.rows);
-        })
-        .catch((error) => {
-            console.log('error getting genres:', error);
-            res.sendStatus(500);
-        });
-});
-
 //POST 
 /* route to post movie to database */
 router.post('/', (req,res) => {
@@ -188,16 +171,28 @@ router.post('/', (req,res) => {
 
     //else if genre is a number run post route to movies table
 
-});
-
-
-
+}); //end post route to add movie
 
 
 //DELETE 
 /* route to remove movie from database */
+router.delete('/:id', (req, res) => {
+    console.log('in delete movie', req.params.id);
 
-/*route to remove all movies matching genre id */
+    let movieToDelete = req.params.id;
+
+    const deleteMovieQuery = `DELETE FROM "movies" WHERE "id" = $1;`;
+
+    pool.query(deleteMovieQuery, [movieToDelete])
+        .then((results) => {
+            console.log('movie deleted:', movieToDelete);
+            res.sendStatus(201);
+        })
+        .catch((error) => {
+            console.log('error deleting movie:', error);
+            res.sendStatus(500);
+        });
+});//end delete route
 
 
 //PUT
