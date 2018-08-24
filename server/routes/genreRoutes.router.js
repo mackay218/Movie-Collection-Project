@@ -34,7 +34,7 @@ router.get('/', (req, res) => {
 router.get('/count', (req, res) => {
     console.log('in get genres count');
 
-    const getGenreCountQuery = `SELECT COUNT("movies"."genre_id") , "genre"."name" 
+    const getGenreCountQuery = `SELECT COUNT("movies"."genre_id"), "genre"."id", "genre"."name" 
                                 FROM "movies" RIGHT JOIN "genre" 
                                 ON "genre"."id" = "movies"."genre_id" 
                                 GROUP BY "genre"."id";`;
@@ -52,6 +52,24 @@ router.get('/count', (req, res) => {
 }); //end get route
 /* route to post genre to database */
 
-/*route to remove all movies matching genre id */
+//DELETE
+router.delete('/:id', (req, res) => {
+    console.log('in delete route', req.params.id);
+
+    let genreToDelete = req.params.id;
+
+    const deleteGenreQuery = `DELETE FROM "genre" WHERE "genre"."id" = $1;`;
+
+    pool.query(deleteGenreQuery, [genreToDelete])
+        .then((results) => {
+            console.log('delete genre:', genreToDelete);
+            res.sendStatus(200);
+        })
+        .catch((results) => {
+            console.log('error deleting genre:', error);
+            res.sendStatus(500);
+        });
+});//end delete route
+
 
 module.exports = router;

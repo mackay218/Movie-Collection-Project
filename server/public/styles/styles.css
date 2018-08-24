@@ -41,6 +41,12 @@ li{
     margin: 10px;
 }
 
+
+td{
+    width: 33%;
+    height: 30px;
+}
+
 .formSection{
     position: relative;
     display: flex;
@@ -110,12 +116,40 @@ li{
     text-align: center;
 }
 
+.deleteCell{
+    width: 250px;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+}
+
+.deleteGenreBox{
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.deleteGenreBox p {
+    margin: 0;
+}
+
 .moviePic{
     position: absolute;
     top: 0;
     height: 50%;
     width: 90%;
     z-index: 2;;
+}
+
+.tableContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+table{
+    width: 90%;
 }
 
 #newGenre{

@@ -14,8 +14,18 @@ movieApp.controller('GenresController', ['$http', function ($http) {
             url: '/genres/count'
         })
         .then(function(response){
-           
             console.log(response.data);
+            self.genreCountArr = [];
+            for(let genre of response.data){
+                let thisGenre = {
+                    name: genre.name,
+                    count: genre.count,
+                    id: genre.id,
+                    isHidden: true
+                };
+                self.genreCountArr.push(thisGenre);
+            }
+
         })
         .catch(function(error){
             console.log('error getting genres:', error);
@@ -24,5 +34,28 @@ movieApp.controller('GenresController', ['$http', function ($http) {
 
     getGenres();
 
+    //DELETE
+    self.deleteGenre = function(genre){
+        console.log('in deleteGenre', genre);
+
+        //prevent deletion of genre with movies of that genre in database
+        if(genre.count > 0){
+            alert('cannot delete genre with movies');
+        }
+        else{
+            $http({
+                method: 'DELETE',
+                url: '/genres/' + genre.id
+            })
+            .then(function (response) {
+                console.log('delete genre:', genre.id);
+            })
+            .catch(function (error) {
+                console.log('error deleting genre:', error);
+            });
+            getGenres();
+        }
+    
+    }; //end deleteGenre
 
 }]);//end genres controller  

@@ -2,5 +2,36 @@
     <h2>Genres</h2>
     <!--form for adding genre-->
     <!--table of genres with count of movies-->
+    <!--LATER add pagination to table-->
+    <div class="tableContainer">
+        <table>
+            <thead>
+                <tr>
+                    <th>Genre</th>
+                    <th>Total Movies</th>
+                    <!--spacer for delete button-->
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="genre in vm.genreCountArr">
+                    <td>{{genre.name}}</td>
+                    <td>{{genre.count}}</td>
+                    <td class="deleteCell">
+                        <button class="genreDeleteBtn" 
+                            ng-click="genre.isHidden = !genre.isHidden">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="deleteGenreBox" ng-hide="genre.isHidden">
+                            <p>Delete this genre?</p>
+                            <button class="yesBtn" ng-click="vm.deleteGenre(genre)">Yes</button>
+                            <button class="noBtn" ng-click="genre.isHidden = true">No</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
     <!--click on genre to view all movie of only that genre-->
 </div>
