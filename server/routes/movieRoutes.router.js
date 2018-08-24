@@ -18,6 +18,23 @@ pool.on('error', (error) => {
 /* route to get movies from database
     send back array of movie objects as one argument
 */
+
+router.get('/', (req, res) => {
+    console.log('in get movies');
+
+    const getMoviesQuery = `SELECT * FROM "movies" JOIN "genre" 
+                            ON "movies"."genre_id" = "genre"."id";`;
+
+    pool.query(getMoviesQuery)
+        .then((results) => {
+            console.log(results.rows);
+            res.send(results.rows);
+        })
+        .catch((error) => {
+            console.log('error getting movies:', error);
+            res.sendStatus(500);
+        });
+});
     
 /* route to get list of genres */
 router.get('/', (req, res) => {
@@ -27,7 +44,7 @@ router.get('/', (req, res) => {
 
     pool.query(getGenresQuery)
         .then((results) => {
-            console.log(results.rows);
+            console.log('genres:', results.rows);
             res.send(results.rows);
         })
         .catch((error) => {
@@ -82,7 +99,7 @@ router.post('/', (req,res) => {
 
                             //query to add movie 
                             //ADD IMG URL LATER
-                            const addMovieQuery = `INSERT INTO "movies" ("name", "release_date",
+                            const addMovieQuery = `INSERT INTO "movies" ("title", "release_date",
                                                 "run_time", "genre_id") VALUES 
                                                 ($1, $2, $3, $4);`;
 
@@ -121,7 +138,7 @@ router.post('/', (req,res) => {
                                     
                                     //query to add new movie with new genre 
                                     //ADD IMG URL LATER
-                                    const addMovieQuery = `INSERT INTO "movies" ("name", "release_date",
+                                    const addMovieQuery = `INSERT INTO "movies" ("title", "release_date",
                                                 "run_time", "genre_id") VALUES 
                                                 ($1, $2, $3, $4);`;
 
@@ -151,14 +168,10 @@ router.post('/', (req,res) => {
                 console.log('error getting all genres:', error);
                 res.sendStatus(500);
             });
-
-       
-            
-
     }
     else{
         //ADD IMG URL LATER
-        const queryText = `INSERT INTO "movies" ("name", "release_date",
+        const queryText = `INSERT INTO "movies" ("title", "release_date",
                                                 "run_time", "genre_id") VALUES 
                                                 ($1, $2, $3, $4);`;
         pool.query(queryText, [movie.title, movie.release_date, movie.run_time, 

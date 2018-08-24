@@ -56,6 +56,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
             }).then(function (response) {
                 console.log('added movie!');
                 getGenres();
+                getMovies();
                 
             }).catch(function (error) {
                 console.log('error in post:', error);
@@ -67,11 +68,12 @@ movieApp.controller('MoviesController', ['$http', function($http){
       
     }//end addMovie
 
-
+    //GET
+    /* function to get list of genres to populate select dropdown */
     function getGenres(){
         $http({
             method: 'GET',
-            url: '/movies'
+            url: '/genres'
         })
         .then(function(response){
             console.log('genres:', response.data);
@@ -87,5 +89,21 @@ movieApp.controller('MoviesController', ['$http', function($http){
      
     getGenres();
 
+    /*function to get movies to make cards on DOM */
+    function getMovies(){
+        $http({
+            method: 'GET',
+            url: '/movies'
+        })
+        .then(function(response){
+            console.log('movies:', response.data);
+            self.moviesArr = response.data;
+        })
+        .catch(function(error){
+            console.log('error in getting movies:', error);
+        });
+    }//end getMovies
+
+    getMovies();
 
 }]);//end movies controller     
