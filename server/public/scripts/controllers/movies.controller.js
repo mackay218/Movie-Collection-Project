@@ -60,6 +60,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
     //GET
     /* function to get list of genres to populate select dropdown */
     function getGenres(){
+        console.log('in getGenres');
         $http({
             method: 'GET',
             url: '/genres'
@@ -79,7 +80,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
         });
 
 
-    }; //end getGenres
+    } //end getGenres
      
     getGenres();
 

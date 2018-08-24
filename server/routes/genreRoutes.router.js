@@ -31,23 +31,24 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/', (req, res) => {
+router.get('/count', (req, res) => {
     console.log('in get genres count');
 
-    const getGenreCountQuery = `SELECT * FROM "movies" JOIN "genre" 
-                                ON "genre"."id" = "movies"."genre_id";`;
+    const getGenreCountQuery = `SELECT COUNT(*) , "genre"."name" FROM "movies" 
+                                JOIN "genre" ON "genre"."id" = "movies"."genre_id" 
+                                GROUP BY "genre"."id";`;
     
     pool.query(getGenreCountQuery)
         .then((results) => {
-            console.log(results.rows);
-
+            console.log("genre count", results.rows);
+            res.send(results.rows);
         })
         .catch((error) => {
             console.log('error getting genre count:', error);
             res.sendStatus(500);
-        })
+        });
 
-});
+}); //end get route
 /* route to post genre to database */
 
 /*route to remove all movies matching genre id */
