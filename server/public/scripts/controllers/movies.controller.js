@@ -13,6 +13,11 @@ movieApp.controller('MoviesController', ['$http', function($http){
     }
     getDate();
 
+    //function to clear add genre text input
+    self.clearGenreInput = function(){
+        self.movieToAdd.genre = '';
+    }
+
     /* create array to hold genre objects: name and id number from database
         if genre array is empty set variable to hide show select to hide select
         and show input for new genre */

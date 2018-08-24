@@ -4,8 +4,9 @@
         <!--ability to add new genre or pick from existing genres:
                 show/hide text input/ select option dropdown-->
     <div class="formContainer">
+        <h3>Add Movie</h3>
         <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate)">
-            <h3>Add Movie</h3>
+            
             <div class="formSection">
                 <label for="#movieTitle">Title</label>
                 <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" required/>
@@ -28,12 +29,12 @@
                     <div class="inputChoice" ng-show="vm.isShown">
                         <label for="#genrePicker">Genre</label>
                         <select name="genreSelect" id="genrePicker" ng-model="vm.movieToAdd.genre" required>
-                            <option disabled value="">Please select</option>
+                            <option value="">Please select</option>
                             <option ng-repeat="genre in vm.genresArr" value="{{genre.id}}">{{genre.name}}</option>
                         </select>
                         <p>OR</p>
                         <button type="button" 
-                                ng-click="vm.isShown = !vm.isShown" 
+                                ng-click="vm.isShown = !vm.isShown; vm.clearGenreInput()" 
                                 ng-init="vm.isShown = true">
                                 Add New Genre
                         </button>
@@ -51,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="formSection">
+            <div class="submitSection">
                 <button>Submit</button>
             </div>
         </form>

@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+body, html{
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3{
+    text-align: center;
+}
+
+form{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.formSection{
+    display: flex;
+    flex-direction: column;
+    max-width: 30vw;
+    min-width: 190px;
+    margin: 5px;
+}
+
+.submitSection{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.inputChoice{
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+#newGenre{
+    width: 100%;
+}
