@@ -34,8 +34,9 @@ router.get('/', (req, res) => {
 router.get('/count', (req, res) => {
     console.log('in get genres count');
 
-    const getGenreCountQuery = `SELECT COUNT(*) , "genre"."name" FROM "movies" 
-                                JOIN "genre" ON "genre"."id" = "movies"."genre_id" 
+    const getGenreCountQuery = `SELECT COUNT("movies"."genre_id") , "genre"."name" 
+                                FROM "movies" RIGHT JOIN "genre" 
+                                ON "genre"."id" = "movies"."genre_id" 
                                 GROUP BY "genre"."id";`;
     
     pool.query(getGenreCountQuery)
