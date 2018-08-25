@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const config = require('../modules/config.js');
+
 console.log('in movie router');
 
 const pool = require('../modules/pool.js');
