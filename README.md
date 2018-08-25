@@ -1,5 +1,17 @@
 # Movie-Collection-Project
 
+## Getting Started
+
+This is an application to add and store information about movies.
+Fork and clone the respository.
+Run ```npm install express```  and ```npm install pg``` to set up the server side and database.
+Create a database called ```movie_collection``` and run the sql queries found in database.sql.
+Go to http://www.omdbapi.com/apikey.aspx to get an API KEY.
+
+In the modules folder create a new file called ```config.js``` add the following code to the file.
+
+```const config = { MY_KEY: 'your_api_key_from_omdb_here' }  module.exports = config```
+
 ## Features
 
 - Add genres
