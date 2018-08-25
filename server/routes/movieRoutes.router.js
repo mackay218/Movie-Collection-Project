@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+const axios = require('axios');
+
 const config = require('../modules/config.js');
+const myKey = config.MY_KEY;
 
 console.log('in movie router');
 
@@ -45,12 +48,31 @@ router.post('/', (req,res) => {
     const movie = req.body;
     console.log(movie);
 
+    let newDate = new Date(movie.release_date);
+
+    let year = newDate.getFullYear();
+
+    let title = movie.title.replace(' ', '+');
+
+    let urlString = `https://www.omdbapi.com/?t=${title}&y=${year}&apikey=${myKey}`;
+  
+
+    axios.get(urlString) 
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log('error getting movie info from api:', error);
+        });
+
     /*if genre is a string run post route to genre table first
         and get new genre id number from genre table 
         and then run post route to movies table */
+
+    /* 
     if(isNaN(movie.genre) && movie.genrePicker == false){
 
-        /* check to make sure genres don't double */
+        //check to make sure genres don't double
         const getAllGenres = `SELECT name FROM "genre";`;
 
         //convert all genres to lowercase
@@ -169,7 +191,7 @@ router.post('/', (req,res) => {
                 res.sendStatus(500);
             });                                               
     }
-
+    */
     //else if genre is a number run post route to movies table
 
 }); //end post route to add movie

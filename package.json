@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mackay2588/Movie-Collection-Project#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.3",
     "pg": "^7.4.3"
   }
