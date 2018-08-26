@@ -20,7 +20,8 @@ pool.on('error', (error) => {
 router.get('/', (req, res) => {
     console.log('in get movies');
 
-    const getMoviesQuery = `SELECT "movies"."title", 
+    const getMoviesQuery = `SELECT
+		"movies"."title", 
 		"movies"."rating", 
 		"movies"."release_date",
 		"movies"."run_time",
@@ -56,22 +57,23 @@ router.get('/', (req, res) => {
 
 //DELETE 
 /* route to remove movie from database */
-router.delete('/:id', (req, res) => {
-    console.log('in delete movie', req.params.id);
+router.delete('/:title/:plot', (req, res) => {
+    console.log('in delete movie', req.params.title);
 
-    let movieToDelete = req.params.id;
+    let toDeleteTitle = req.params.title;
+    let toDeletePlot = req.params.plot;
+    
+    const deleteMovieQuery = `DELETE FROM "movies" WHERE "title" = $1 AND "plot" = $2;`;
 
-    const deleteMovieQuery = `DELETE FROM "movies" WHERE "id" = $1;`;
-
-    pool.query(deleteMovieQuery, [movieToDelete])
+    pool.query(deleteMovieQuery, [toDeleteTitle, toDeletePlot])
         .then((results) => {
-            console.log('movie deleted:', movieToDelete);
+            console.log('movie deleted:', toDeleteTitle);
             res.sendStatus(201);
         })
         .catch((error) => {
             console.log('error deleting movie:', error);
             res.sendStatus(500);
-        });
+        }); 
 });//end delete route
 
 module.exports = router;

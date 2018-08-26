@@ -16,6 +16,7 @@ movieApp.controller('CollectionController', ['$http', function($http){
                 self.moviesArr = [];
                 for (let movie of response.data) {
                     let thisMovieObj = {
+                        id: movie.string_agg,
                         title: movie.title,
                         rating: movie.rating,
                         genre: movie.string_agg,
@@ -42,14 +43,14 @@ movieApp.controller('CollectionController', ['$http', function($http){
 
     //DELETE
     /* function to delete movies */
-    self.deleteMovie = function (id) {
-        console.log('in deleteMovie', id);
+    self.deleteMovie = function (title, plot) {
+        console.log('in deleteMovie', title, plot);
         $http({
             method: 'DELETE',
-            url: '/collection/' + id
+            url: '/collection/' + title + '/' + plot
         })
             .then(function (response) {
-                console.log('deleted movie:', id);
+                console.log('deleted movie:', title);
                 getMovies();
             })
             .catch(function (error) {

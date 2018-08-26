@@ -40,7 +40,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
             }).then(function (response) {
                 console.log('added movie!');
                 getGenres();
-                getMovies();
+               
                 self.movieToAdd = {};
             }).catch(function (error) {
                 console.log('error in post:', error);
