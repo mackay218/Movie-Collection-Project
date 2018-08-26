@@ -56,143 +56,247 @@ router.post('/', (req,res) => {
 
     let urlString = `https://www.omdbapi.com/?t=${title}&y=${year}&apikey=${myKey}`;
   
+    console.log(urlString);
 
+    //get movie info from omdb api
     axios.get(urlString) 
         .then((response) => {
-            console.log(response);
+            console.log('getting info from omdb');
+            let newTitle = response.data.Title;
+            console.log('newTitle:', newTitle);
+            console.log(newTitle.length);
+            //check to see if movie is found
+            
+            if(newTitle != 'undefined'){
+                if (newTitle.length > 0) {
+                    //call function to post movie to database
+                    //using api data
+                    console.log('hello', response.data.Title);
+                    postMovieFromAPI(response.data);
+                }
+                else {
+                    //call function to post movie to database
+                    //using user given data
+                    //postMovieFromUser();
+                } 
+            }
         })
         .catch((error) => {
             console.log('error getting movie info from api:', error);
-        });
 
-    /*if genre is a string run post route to genre table first
-        and get new genre id number from genre table 
-        and then run post route to movies table */
-
-    /* 
-    if(isNaN(movie.genre) && movie.genrePicker == false){
-
-        //check to make sure genres don't double
+            //call function to post movie to database
+            //using user given data
+            postMovieFromUser();
+            res.sendStatus(500);
+        }); 
+ 
+    /* function to get all genres from local database */
+    function getGenresFromDB(genresFromApi, movieINFO, useApi){
+        //array to hold genres from local db
+        let genreArr = [];
+        console.log('in getGenresFromDB');
+       
+        //get list of genres from local database to compare to genres from api
         const getAllGenres = `SELECT name FROM "genre";`;
-
-        //convert all genres to lowercase
-        const newGenre = movie.genre.toLowerCase();
-
-
+        
         pool.query(getAllGenres)
             .then((results) => {
                 console.log('results:', results.rows);
-
-                const genreArr = [];
-
-                for(name of results.rows){
+                for (name of results.rows) {
                     genreArr.push(name.name);
                 }
+                console.log('getGenresFromDB current genreArr', genreArr);
+                console.log('genresFromApis:', genresFromApi);
+
+                compareGenreLists(genreArr, genresFromApi, movieINFO, useApi);
+            })
+            .catch((error) =>{
+                console.log('error getting genres from local db:', error);
+            });
+            
+    }//end getAllGenres
+    /******************/
+
+    /* function to compare genres from api to local database */
+    function compareGenreLists(genreArr, genresFromApi, movieINFO, useApi){
+        console.log('in compareGenreLists');
+        
+        //loop through genresFromApi to check against genreArr
+        for (let newGenre of genresFromApi) {
+            //console.log('new genres:', newGenre);
+            //console.log('current genres:', genreArr);
+            if (genreArr.includes(newGenre)) {
+                //query to get id of matching existing genre
+                getGenreID(newGenre, movieINFO, useApi);
+                console.log('genre already in database', newGenre);
+            }
+
+            else {
+                console.log('thats a new genre:', newGenre);
+
+                //add new genre
+                //addNewGenre(newGenre);
+
+                //get genre id number
+                //getGenreID(newGenre);
+            }
+        }  
+
+    }//end compareGenreLists
+
+    /*function to add genre to local database */
+    function addNewGenre(newGenre){
+        console.log('in addNewGenre', newGenre);
+
+        //query to add new genre
+        const genreQueryText = `INSERT INTO "genre" ("name") VALUES ($1);`;
+
+        pool.query(genreQueryText, [newGenre])
+            .then((results) => {
+                console.log('add new genre:', newGenre);
                 
-                //check if genre already exists
-                if(genreArr.includes(newGenre)){
-                    console.log('genre already in database');
+            })
+            .catch((error) => {
+                console.log('error adding new genre:', error);
+                res.sendStatus(500);
+            });
+    }//end addNewGenre
+    /*********************/
 
-                    //query to get id of matching existing genre
-                    const getGenreID = `SELECT id FROM "genre" WHERE "name" = ($1);`;
+    /* function to get genre id from local database */
+    function getGenreID(newGenre, movieINFO, useApi){ 
+        console.log('in get GenreID', newGenre);
 
-                    pool.query(getGenreID, [newGenre])
-                        .then((result) => {
+        let genreID = 0;
 
-                            let genreID = '';
+        const getGenreID = `SELECT id FROM "genre" WHERE "name" = $1;`;
 
-                            genreID = result.rows[0].id;
+        pool.query(getGenreID, [newGenre])
+            .then((result) => {
+                genreID = result.rows[0].id;
+                console.log('genreID after:', genreID);
 
-                            //query to add movie 
-                            //ADD IMG URL LATER
-                            const addMovieQuery = `INSERT INTO "movies" ("title", "release_date",
-                                                "run_time", "genre_id") VALUES 
-                                                ($1, $2, $3, $4);`;
-
-                            pool.query(addMovieQuery, [movie.title, movie.release_date,
-                            movie.run_time, genreID])
-                                .then((result) => {
-                                    console.log('movie and genre added');
-                                    res.sendStatus(201);
-
-                                }).catch((error) => {
-                                    console.log('error adding movie and new genre', error);
-                                    res.sendStatus(500);
-                                });
-
-                        });
-                        
-                        
-
+                if(useApi == true){
+                    addMovieFromAPI(movieINFO, genreID);
                 }
-                //add new genre and new movie
-                else{
-                    //query to add new genre
-                    const genreQueryText = `INSERT INTO "genre" ("name") VALUES ($1);`;
-
-                    pool.query(genreQueryText, [newGenre])
-                        .then((result) => {
-
-                            //query to get back id for new genre added 
-                            const getGenreID = `SELECT id FROM "genre" WHERE "name" = ($1);`;
-
-                            let newGenreID = '';
- 
-                            pool.query(getGenreID, [newGenre])
-                                .then((results) => {
-                                    newGenreID = results.rows[0].id;
-                                    
-                                    //query to add new movie with new genre 
-                                    //ADD IMG URL LATER
-                                    const addMovieQuery = `INSERT INTO "movies" ("title", "release_date",
-                                                "run_time", "genre_id") VALUES 
-                                                ($1, $2, $3, $4);`;
-
-                                    pool.query(addMovieQuery, [movie.title, movie.release_date,
-                                    movie.run_time, newGenreID])
-                                        .then((results) => {
-                                            console.log('movie and genre added');
-                                            res.sendStatus(201);
-
-                                        }).catch((error) => {
-                                            console.log('error adding movie and new genre', error);
-                                            res.sendStatus(500);
-                                        });
-
-                                }).catch((error) => {
-                                    console.log('error getting genre id from add movie', error);
-                                    res.sendStatus(500);
-                                });
-
-                        }).catch((error) => {
-                            console.log('error in genre post from addMovie', error);
-                            res.sendStatus(500);
-                        }); 
+                else if(useApi == false){
+                    addMovieFromUser(genreID);
                 }
             })
             .catch((error) => {
-                console.log('error getting all genres:', error);
+                console.log('error getting genre id:', error);
                 res.sendStatus(500);
             });
-    }
-    else{
-        //ADD IMG URL LATER
-        const queryText = `INSERT INTO "movies" ("title", "release_date",
-                                                "run_time", "genre_id") VALUES 
-                                                ($1, $2, $3, $4);`;
-        pool.query(queryText, [movie.title, movie.release_date, movie.run_time, 
-                                movie.genre])
-            .then((result) => {
-                console.log('added new movie');
+    }//end getGenreID
+    /********************/
+
+    let useApi = true;
+
+    /* function to add movie to database */
+    function addMovieFromAPI(movieINFO, genreID){
+        console.log('in addMovieFromAPI', genreID);
+
+        //query to add movie 
+        
+        const addMovieQuery = `INSERT INTO "movies" ("title", "rating", 
+                                                            "release_date",
+                                                            "image_url",
+                                                            "run_time", 
+                                                            "director",
+                                                            "writer",
+                                                            "actors",
+                                                            "plot",
+                                                            "imdbRating",
+                                                            "genre_id") VALUES 
+                                                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
+        pool.query(addMovieQuery, [movieINFO.Title, movieINFO.Rated,
+        movieINFO.Released, movieINFO.Poster,
+        movieINFO.Runtime, movieINFO.Director,
+        movieINFO.Writer, movieINFO.actors,
+        movieINFO.Plot, movieINFO.imdbRating,
+            genreID])
+            .then((results) => {
+                console.log('movie added');
                 res.sendStatus(201);
             })
             .catch((error) => {
-                console.log('error in adding ONLY new movie:', error);
+                console.log('error adding movie:', error);
                 res.sendStatus(500);
-            });                                               
-    }
-    */
-    //else if genre is a number run post route to movies table
+            }); 
+    }//end addMovieFromAPI
+
+    function postMovieFromAPI(movieINFO){
+        console.log('in postMovieFromAPI', movieINFO.Title);
+        
+        useApi = true;
+
+        //get list of genres from api
+        let genresFromApi = movieINFO.Genre.toLowerCase().replace(/\s/g, '').split(',');
+        console.log('genresFromApi:', genresFromApi);
+        
+        getGenresFromDB(genresFromApi, movieINFO, useApi);
+
+    }//end postMovieFromAPI
+    /********************************/
+
+    function addMovieFromUser(genreID){
+        console.log('in addMovieFromUser');
+        //query to add new movie from user provided info
+        const addMovieQuery = `INSERT INTO "movies" ("title", "release_date",
+                                                "run_time", "genre_id") VALUES 
+                                                ($1, $2, $3, $4);`;
+        pool.query(addMovieQuery, [movie.title, movie.release_date, 
+                                    movie.run_time, genreID])
+            .then((results) => {
+                console.log('add new movie:', movie.title);
+                res.sendStatus(201);
+            })
+            .catch((error) => {
+                console.log('error adding movie:', error);
+                res.sendStatus(500);
+            });
+
+    }//end addMovieFromUser
+    /***************************/
+ /*
+    function postMovieFromUser(){
+        console.log('in postMovieFromUser');
+        /*if genre is a string run post route to genre table first
+        and get new genre id number from genre table 
+        and then run post route to movies table */
+        /*
+        if (isNaN(movie.genre) && movie.genrePicker == false){
+
+            //get genres from local database
+            getGenresFromDB();
+
+            newGenre = movie.genre.toLowerCase();
+
+            //check if local database already contains new genre
+            if (genreArr.includes(newGenre)){
+                console.log('genre already in database');
+                //query to get id of matching existing genre
+
+                //get genre id number
+                getGenreID(newGenre);
+
+                //add movie from user provided info
+                addMovieFromUser();
+            }
+            else{
+                //add new genre
+                addNewGenre(newGenre);
+
+                //get genre id number
+                getGenreID(newGenre);
+
+                //add movie from user provided info
+                addMovieFromUser();
+            }
+        }
+    }  */
+    //end postMovieFromUser
+    /***************************/
 
 }); //end post route to add movie
 
@@ -215,13 +319,6 @@ router.delete('/:id', (req, res) => {
             res.sendStatus(500);
         });
 });//end delete route
-
-
-//PUT
-
-/*route to update movie info */
-
-/*route to update genre info */
 
 
 module.exports = router;
