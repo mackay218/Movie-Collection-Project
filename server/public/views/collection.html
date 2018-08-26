@@ -3,7 +3,24 @@
     <h2>Collection</h2>
     <!--movie cards containers-->
     <div class="moviesContainer">
-        <!--ADD form for sorting or searching-->
+        <div class="sortSearchContainer">
+            <!--form for searching-->
+            
+
+            <!--select for sorting-->
+            <div class="collectionSection">
+                <h4>Sort</h4>
+                <label for="#genrePicker">Genre</label>
+                <select name="genreSelect" 
+                    ng-model="vm.genre"
+                    ng-change="vm.getMovies(vm.genre)" 
+                    id="genrePicker">
+                    <option value="">Please select</option>
+                    <option value="allMovies">All</option>
+                    <option ng-repeat="genre in vm.genresArr" value="{{genre.name}}">{{genre.name}}</option>
+                </select>
+            </div>
+        </div>
         <div class="cardsContainer">
             <div class="movieCard" ng-repeat="movie in vm.moviesArr">
                 <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">

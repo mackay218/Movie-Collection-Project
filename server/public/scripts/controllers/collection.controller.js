@@ -4,7 +4,8 @@ movieApp.controller('CollectionController', ['$http', function($http){
     const self = this;
 
     /*function to get movies to make cards on DOM */
-    function getMovies() {
+    self.getMovies = function(genre) {
+        console.log('in getMovies');
         $http({
             method: 'GET',
             url: '/collection'
@@ -31,7 +32,18 @@ movieApp.controller('CollectionController', ['$http', function($http){
                         isHidden: true
                     };
 
-                    self.moviesArr.push(thisMovieObj);
+                    if(genre == "allMovies" || genre == ""){
+                        console.log('all movies');
+                        self.moviesArr.push(thisMovieObj);
+                    }
+                    else{  
+                        console.log('filtered'); 
+                        let thisMovieGenreArr = movie.string_agg.replace(/\s/g, '').split(',');
+
+                        if(thisMovieGenreArr.includes(genre)){
+                            self.moviesArr.push(thisMovieObj);
+                        }
+                    }
                 }
             })
             .catch(function (error) {
@@ -39,7 +51,34 @@ movieApp.controller('CollectionController', ['$http', function($http){
             });
     }; //end getMovies
 
-    getMovies();
+    self.allMovies = "allMovies";
+
+    self.getMovies(self.allMovies);
+
+    /* function to get list of genres to populate select dropdown */
+    function getGenres() {
+        console.log('in getGenres');
+
+        $http({
+            method: 'GET',
+            url: '/genres'
+        })
+            .then(function (response) {
+                console.log('genres:', response.data);
+                self.genresArr = response.data;
+                if (self.genresArr.length == 0) {
+                    self.isShown = false;
+                }
+                else {
+                    self.isShown = true;
+                }
+            })
+            .catch(function (error) {
+                console.log('error getting genres for select:', error);
+            });
+    } //end getGenres
+
+    getGenres();
 
     //DELETE
     /* function to delete movies */
