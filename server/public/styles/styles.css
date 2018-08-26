@@ -15,6 +15,7 @@ body{
 
 a{
     text-decoration: none;
+    color: #fff;
 }
 
 form{
@@ -37,13 +38,44 @@ h1, h2, h3{
 }
 
 nav{
+    height: 12vh;
+    min-width: 480px;
     list-style: none;
     display: flex;
     flex-direction: row;
+    background-color: #191919;
+}
+
+li img{
+    height: 100%;
+    width: 200px;
+    padding-right: 20px;
 }
 
 li{
-    margin: 10px;
+    padding-right: 10px;
+    min-width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+    border-width: 2px;
+    border-right-style: solid;
+    -webkit-border-image: 
+      -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0), to(#fff), to(rgba(0,0,0,0)))) 1 100%;
+    -webkit-border-image: 
+      -webkit-linear-gradient( rgba(0, 0, 0, 0), #fff, rgba(0,0,0,0)) 1 100%;
+    -moz-border-image:
+      -moz-linear-gradient(rgba(0, 0, 0, 0) , #fff, rgba(0,0,0,0)) 1 100%;    
+    -o-border-image:
+      -o-linear-gradient(#fff, rgba(0, 0, 0, 0) , #fff, rgba(0,0,0,0)) 1 100%;
+    border-image:
+      linear-gradient(to rgba(0, 0, 0, 0), #fff, rgba(0,0,0,0)) 1 100%;
+}
+
+li:hover{
+    background:linear-gradient(to bottom, rgba(255,255,255,0.1), 
+    rgba(255,255,255,0.3), rgba(255,255,255,0.1));
 }
 
 md-datepicker{
