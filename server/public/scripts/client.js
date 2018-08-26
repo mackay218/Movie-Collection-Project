@@ -21,6 +21,10 @@ movieApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/collection.html',
         controller: 'CollectionController as vm'
     })
+    .when('/search', {
+        templateUrl: 'views/search.html',
+        controller: 'SearchController as vm'
+    })
     .otherwise( {templateUrl: 'views/404.html'});
 
 }]); //end config

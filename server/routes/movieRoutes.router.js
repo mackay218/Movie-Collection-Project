@@ -11,11 +11,11 @@ console.log('in movie router');
 const pool = require('../modules/pool.js');
 
 pool.on('connect', () => {
-    console.log('postgresql connected');
+    //console.log('postgresql connected');
 });
 
 pool.on('error', (error) => {
-    console.log('Error connecting to db', error);
+    //console.log('Error connecting to db', error);
 });
 
 //POST 
@@ -24,7 +24,7 @@ router.post('/', (req,res) => {
     console.log('in post movies');
 
     const movie = req.body;
-    console.log(movie);
+    //console.log(movie);
 
     let newDate = new Date(movie.release_date);
 
@@ -34,22 +34,22 @@ router.post('/', (req,res) => {
 
     let urlString = `https://www.omdbapi.com/?t=${title}&y=${year}&apikey=${myKey}`;
   
-    console.log(urlString);
+    //console.log(urlString);
 
     //get movie info from omdb api
     axios.get(urlString) 
         .then((response) => {
             console.log('getting info from omdb');
             let newTitle = response.data.Title;
-            console.log('newTitle:', newTitle);
-            console.log(newTitle.length);
+            //console.log('newTitle:', newTitle);
+            //console.log(newTitle.length);
             //check to see if movie is found
             
             if(newTitle != 'undefined'){
                 if (newTitle.length > 0) {
                     //call function to post movie to database
                     //using api data
-                    console.log('hello', response.data.Title);
+              //      console.log('hello', response.data.Title);
                     postMovieFromAPI(response.data);
                 }
                 else {
@@ -78,12 +78,12 @@ router.post('/', (req,res) => {
         
         pool.query(getAllGenres)
             .then((results) => {
-                console.log('results:', results.rows);
+                //console.log('results:', results.rows);
                 for (name of results.rows) {
                     genreArr.push(name.name);
                 }
-                console.log('getGenresFromDB current genreArr', genreArr);
-                console.log('genresFromApis:', genresFromInput);
+                //console.log('getGenresFromDB current genreArr', genreArr);
+                //console.log('genresFromApis:', genresFromInput);
 
                 compareGenreLists(genreArr, genresFromInput, movieINFO, useApi);
                 
@@ -107,10 +107,10 @@ router.post('/', (req,res) => {
                 if (genreArr.includes(newGenre)) {
                     //query to get id of matching existing genre
                     getGenreID(newGenre, movieINFO, useApi);
-                    console.log('genre already in database', newGenre);
+                    //console.log('genre already in database', newGenre);
                 }
                 else {
-                    console.log('thats a new genre:', newGenre);
+                    //console.log('thats a new genre:', newGenre);
 
                     //add new genre
                     addNewGenre(newGenre, movieINFO, useApi);
@@ -121,10 +121,10 @@ router.post('/', (req,res) => {
             if (genreArr.includes(genresFromInput)) {
                 //query to get id of matching existing genre
                 getGenreID(genresFromInput, movieINFO, useApi);
-                console.log('genre already in database', genresFromInput);
+                //console.log('genre already in database', genresFromInput);
             }
             else {
-                console.log('thats a new genre:', genresFromInput);
+                //console.log('thats a new genre:', genresFromInput);
 
                 //add new genre
                 addNewGenre(genresFromInput, movieINFO, useApi);
@@ -141,13 +141,13 @@ router.post('/', (req,res) => {
 
         pool.query(genreQueryText, [newGenre])
             .then((results) => {
-                console.log('add new genre:', newGenre);
+                //console.log('add new genre:', newGenre);
                 
                 //get genre id
                 getGenreID(newGenre, movieINFO, useApi);
             })
             .catch((error) => {
-                console.log('error adding new genre:', error);
+                //console.log('error adding new genre:', error);
                 res.sendStatus(500);
             });
     }//end addNewGenre
@@ -164,7 +164,7 @@ router.post('/', (req,res) => {
         pool.query(getGenreID, [newGenre])
             .then((result) => {
                 genreID = result.rows[0].id;
-                console.log('genreID after:', genreID);
+                //console.log('genreID after:', genreID);
 
                 if(useApi == true){
                     addMovieFromAPI(movieINFO, genreID);
@@ -174,7 +174,7 @@ router.post('/', (req,res) => {
                 }
             })
             .catch((error) => {
-                console.log('error getting genre id:', error);
+                //console.log('error getting genre id:', error);
                 res.sendStatus(500);
             });
     }//end getGenreID
@@ -222,7 +222,7 @@ router.post('/', (req,res) => {
 
         //get list of genres from api
         let genresFromApi = movieINFO.Genre.toLowerCase().replace(/\s/g, '').split(',');
-        console.log('genresFromApi:', genresFromApi);
+        //console.log('genresFromApi:', genresFromApi);
         
         getGenresFromDB(genresFromApi, movieINFO, useApi);
 
