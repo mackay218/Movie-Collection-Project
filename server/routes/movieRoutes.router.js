@@ -77,21 +77,20 @@ router.post('/', (req,res) => {
                 else {
                     //call function to post movie to database
                     //using user given data
-                    //postMovieFromUser();
+                    postMovieFromUser();
                 } 
             }
         })
         .catch((error) => {
             console.log('error getting movie info from api:', error);
-
             //call function to post movie to database
             //using user given data
             postMovieFromUser();
-            res.sendStatus(500);
+            //res.sendStatus(500);
         }); 
  
     /* function to get all genres from local database */
-    function getGenresFromDB(genresFromApi, movieINFO, useApi){
+    function getGenresFromDB(genresFromInput, movieINFO, useApi){
         //array to hold genres from local db
         let genreArr = [];
         console.log('in getGenresFromDB');
@@ -106,9 +105,10 @@ router.post('/', (req,res) => {
                     genreArr.push(name.name);
                 }
                 console.log('getGenresFromDB current genreArr', genreArr);
-                console.log('genresFromApis:', genresFromApi);
+                console.log('genresFromApis:', genresFromInput);
 
-                compareGenreLists(genreArr, genresFromApi, movieINFO, useApi);
+                compareGenreLists(genreArr, genresFromInput, movieINFO, useApi);
+                
             })
             .catch((error) =>{
                 console.log('error getting genres from local db:', error);
@@ -118,34 +118,44 @@ router.post('/', (req,res) => {
     /******************/
 
     /* function to compare genres from api to local database */
-    function compareGenreLists(genreArr, genresFromApi, movieINFO, useApi){
+    function compareGenreLists(genreArr, genresFromInput, movieINFO, useApi){
         console.log('in compareGenreLists');
         
-        //loop through genresFromApi to check against genreArr
-        for (let newGenre of genresFromApi) {
-            //console.log('new genres:', newGenre);
-            //console.log('current genres:', genreArr);
-            if (genreArr.includes(newGenre)) {
-                //query to get id of matching existing genre
-                getGenreID(newGenre, movieINFO, useApi);
-                console.log('genre already in database', newGenre);
-            }
+        if( Array.isArray(genresFromInput) && genresFromInput.length > 1){
+            //loop through genresFromApi to check against genreArr
+            for (let newGenre of genresFromInput) {
+                //console.log('new genres:', newGenre);
+                //console.log('current genres:', genreArr);
+                if (genreArr.includes(newGenre)) {
+                    //query to get id of matching existing genre
+                    getGenreID(newGenre, movieINFO, useApi);
+                    console.log('genre already in database', newGenre);
+                }
+                else {
+                    console.log('thats a new genre:', newGenre);
 
+                    //add new genre
+                    addNewGenre(newGenre, movieINFO, useApi);
+                }
+            } 
+        }
+        else{
+            if (genreArr.includes(genresFromInput)) {
+                //query to get id of matching existing genre
+                getGenreID(genresFromInput, movieINFO, useApi);
+                console.log('genre already in database', genresFromInput);
+            }
             else {
-                console.log('thats a new genre:', newGenre);
+                console.log('thats a new genre:', genresFromInput);
 
                 //add new genre
-                //addNewGenre(newGenre);
-
-                //get genre id number
-                //getGenreID(newGenre);
+                addNewGenre(genresFromInput, movieINFO, useApi);
             }
-        }  
-
+        }
     }//end compareGenreLists
 
     /*function to add genre to local database */
-    function addNewGenre(newGenre){
+    function addNewGenre(newGenre, movieINFO, useApi){
         console.log('in addNewGenre', newGenre);
 
         //query to add new genre
@@ -155,6 +165,8 @@ router.post('/', (req,res) => {
             .then((results) => {
                 console.log('add new genre:', newGenre);
                 
+                //get genre id
+                getGenreID(newGenre, movieINFO, useApi);
             })
             .catch((error) => {
                 console.log('error adding new genre:', error);
@@ -212,7 +224,7 @@ router.post('/', (req,res) => {
         pool.query(addMovieQuery, [movieINFO.Title, movieINFO.Rated,
         movieINFO.Released, movieINFO.Poster,
         movieINFO.Runtime, movieINFO.Director,
-        movieINFO.Writer, movieINFO.actors,
+        movieINFO.Writer, movieINFO.Actors,
         movieINFO.Plot, movieINFO.imdbRating,
             genreID])
             .then((results) => {
@@ -243,8 +255,8 @@ router.post('/', (req,res) => {
         console.log('in addMovieFromUser');
         //query to add new movie from user provided info
         const addMovieQuery = `INSERT INTO "movies" ("title", "release_date",
-                                                "run_time", "genre_id") VALUES 
-                                                ($1, $2, $3, $4);`;
+                                            "run_time", "genre_id") VALUES 
+                                            ($1, $2, $3, $4);`;
         pool.query(addMovieQuery, [movie.title, movie.release_date, 
                                     movie.run_time, genreID])
             .then((results) => {
@@ -258,43 +270,26 @@ router.post('/', (req,res) => {
 
     }//end addMovieFromUser
     /***************************/
- /*
+ 
     function postMovieFromUser(){
         console.log('in postMovieFromUser');
         /*if genre is a string run post route to genre table first
         and get new genre id number from genre table 
         and then run post route to movies table */
-        /*
+        
+        useApi = false;
+
         if (isNaN(movie.genre) && movie.genrePicker == false){
 
             //get genres from local database
-            getGenresFromDB();
+            let blankInfo = '';
 
-            newGenre = movie.genre.toLowerCase();
-
-            //check if local database already contains new genre
-            if (genreArr.includes(newGenre)){
-                console.log('genre already in database');
-                //query to get id of matching existing genre
-
-                //get genre id number
-                getGenreID(newGenre);
-
-                //add movie from user provided info
-                addMovieFromUser();
-            }
-            else{
-                //add new genre
-                addNewGenre(newGenre);
-
-                //get genre id number
-                getGenreID(newGenre);
-
-                //add movie from user provided info
-                addMovieFromUser();
-            }
+            getGenresFromDB(movie.genre, blankInfo, useApi);
         }
-    }  */
+        else{
+            addMovieFromUser(movie.genre);
+        }
+    }  
     //end postMovieFromUser
     /***************************/
 
