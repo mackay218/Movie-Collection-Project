@@ -4,7 +4,11 @@
 
 This is an application to add and store information about movies.
 Fork and clone the respository.
-Run ```npm install express```  and ```npm install pg``` to set up the server side and database.
+
+Run ```npm install express```  and ```npm install pg``` in terminal to set up the server side and database.
+
+Run ```npm install axios``` in terminal to set up calls to the ombd api.
+
 Create a database called ```movie_collection``` and run the sql queries found in database.sql.
 Go to http://www.omdbapi.com/apikey.aspx to get an API KEY.
 
