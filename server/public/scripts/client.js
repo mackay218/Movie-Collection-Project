@@ -17,6 +17,10 @@ movieApp.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/genres.html',
         controller: 'GenresController as vm'
     })
+    .when('/collection', {
+        templateUrl: 'views/collection.html',
+        controller: 'CollectionController as vm'
+    })
     .otherwise( {templateUrl: 'views/404.html'});
 
 }]); //end config

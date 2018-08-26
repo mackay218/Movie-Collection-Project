@@ -9,7 +9,7 @@ movieApp.controller('GenresController', ['$http', function ($http) {
     
         $http({
             method: 'POST',
-            url: '/genres',
+            url: '/collection',
             data: genreToAdd
         })
         .then(function(response){

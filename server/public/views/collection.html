@@ -1,0 +1,27 @@
+<div class="container">
+
+    <h2>All Movies</h2>
+    <!--movie cards containers-->
+    <div class="moviesContainer">
+        <!--ADD form for sorting or searching-->
+        <div class="cardsContainer">
+            <div class="movieCard" ng-repeat="movie in vm.moviesArr">
+                <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">
+                    <p class="question">Delete this movie?</p>
+                    <button class="yesBtn" ng-click="vm.deleteMovie(movie.id)">Yes</button>
+                    <button class="noBtn" ng-click="movie.isHidden = true">No</button>
+                </div>
+                <button class="movieDeleteBtn" ng-click="movie.isHidden = !movie.isHidden"><i class="fas fa-times"></i></button>
+                <img class="moviePic" src="{{movie.image_url}}">
+                <div class="cardInfo">
+                    <p>{{movie.title}}</p>
+                    <p> released: {{movie.release_date}}</p>
+                    <p> run time: {{movie.run_time}}</p>
+                    <p>{{movie.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
