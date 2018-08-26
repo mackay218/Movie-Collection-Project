@@ -20,8 +20,28 @@ pool.on('error', (error) => {
 router.get('/', (req, res) => {
     console.log('in get movies');
 
-    const getMoviesQuery = `SELECT * FROM "genre" JOIN "movies" 
-                            ON "genre"."id" = "movies"."genre_id";`;
+    const getMoviesQuery = `SELECT "movies"."title", 
+		"movies"."rating", 
+		"movies"."release_date",
+		"movies"."run_time",
+		"movies"."director",
+		"movies"."writer",
+		"movies"."actors",
+		"movies"."plot",
+		"movies"."image_url",
+		"movies"."imdbRating",
+		string_agg("name", ', ') 
+		FROM "movies" JOIN "genre" ON "genre"."id" = CAST("movies"."genre_id" as INTEGER) 
+		GROUP BY "movies"."title", 
+		"movies"."rating", 
+		"movies"."release_date",
+		"movies"."run_time",
+		"movies"."director",
+		"movies"."writer",
+		"movies"."actors",
+		"movies"."plot",
+		"movies"."image_url",
+		"movies"."imdbRating";`;
 
     pool.query(getMoviesQuery)
         .then((results) => {

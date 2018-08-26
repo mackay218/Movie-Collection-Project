@@ -17,10 +17,15 @@ movieApp.controller('CollectionController', ['$http', function($http){
                 for (let movie of response.data) {
                     let thisMovieObj = {
                         title: movie.title,
-                        id: movie.id,
-                        name: movie.name,
+                        rating: movie.rating,
+                        genre: movie.string_agg,
                         release_date: movie.release_date,
                         run_time: movie.run_time,
+                        director: movie.director,
+                        writer: movie.writer,
+                        actors: movie.actors,
+                        plot: movie.plot,
+                        imdbRating: movie.imdbRating,
                         image_url: movie.image_url,
                         isHidden: true
                     };
