@@ -22,7 +22,6 @@ form{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
 }
 
 form label{
@@ -35,6 +34,11 @@ form label{
 h1, h2, h3{
     text-align: center;
     margin: 0;
+}
+
+input{
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+    border-radius: 5px;
 }
 
 nav{
@@ -78,25 +82,69 @@ li:hover{
     rgba(255,255,255,0.3), rgba(255,255,255,0.1));
 }
 
+.addMovieContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.newestMovieContainer{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.newestMovieCard{
+    width: 30vw;
+}
+
+.newestMoviePic{
+    width: 30vw;
+    box-shadow: 5px 8px 10px rgba(0,0,0,0.2);
+}
+
 md-datepicker{
+    width: 100%;
+}
+
+.md-datepicker-input-container{
     background-color: #fff;
+}
+
+#addMovieForm{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    justify-content: left;
+    padding-left: 20px;
+    margin: 0;
+}
+
+#addMovieForm h3{
+    width: 200px;
+}
+
+.formContainer{
+    width: 50vw;
+    margin: 0;
+    padding-top: 20px;
 }
 
 .formSection{
     position: relative;
     display: flex;
     flex-direction: column;
-    min-width: 190px;
-    height: 150px;
+    width: 200px;
+    height: 80px;
+    max-height: 180px;
     margin: 5px;
-    align-items: center;
+    align-items: left;
     justify-content: center;
 }
 
-.submitSection{
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.genreSelect{
+    height: 200px;
 }
 
 .inputChoice{
@@ -104,7 +152,11 @@ md-datepicker{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: left;
+}
+
+.inputChoice p{
+    text-align: center;
 }
 
 .cardsContainer{
@@ -162,23 +214,6 @@ md-datepicker{
     text-align: center;
 }
 
-.deleteCell{
-    width: 250px;
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap-reverse;
-}
-
-.deleteGenreBox{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.deleteGenreBox p {
-    margin: 0;
-}
-
 .moviePic{
     position: absolute;
     top: 0;
@@ -187,6 +222,27 @@ md-datepicker{
     z-index: 2;;
 }
 
+.genreContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.genreContainer .formContainer form{
+    display: flex; 
+    flex-direction: row;
+    width: 300px;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin: 10px;
+    padding: 0;
+}
+
+.genreContainer .formContainer form input{
+    height: 40px;
+    position: relative;
+    bottom: 5px;
+}
 
 .tableContainer{
     width: 100%;
@@ -199,14 +255,60 @@ md-datepicker{
     width: 90%;
 }
 
+tr{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+tr:hover{
+    background-color: rgba(0,0,0,0.2);
+}
+
 .tableContainer td{
     height: 30px;
+    width: 30%;
+}
+
+.deleteCell{
+    width: 300px !important;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+}
+
+.deleteGenreBox{
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.genreDeleteBtn{
+    background-color: transparent;
+    border: none;
+}
+
+.genreBtns{
+    background-color: #191919;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.genreBtns:hover{
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+.deleteGenreBox p {
+    margin: 0;
+    padding-top: 5px;
 }
 
 .genreInfo{
     text-align: center;
 }
-
 
 #newGenre{
     width: 100%;

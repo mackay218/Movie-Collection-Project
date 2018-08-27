@@ -24,7 +24,7 @@ router.post('/', (req,res) => {
     console.log('in post movies');
 
     const movie = req.body;
-    //console.log(movie);
+    console.log(movie);
 
     let newDate = new Date(movie.release_date);
 
@@ -41,7 +41,7 @@ router.post('/', (req,res) => {
         .then((response) => {
             console.log('getting info from omdb');
             let newTitle = response.data.Title;
-            //console.log('newTitle:', newTitle);
+            console.log('newTitle:', newTitle);
             //console.log(newTitle.length);
             //check to see if movie is found
             
@@ -49,7 +49,7 @@ router.post('/', (req,res) => {
                 if (newTitle.length > 0) {
                     //call function to post movie to database
                     //using api data
-              //      console.log('hello', response.data.Title);
+                    console.log('hello', response.data.Title);
                     postMovieFromAPI(response.data);
                 }
                 else {
@@ -64,7 +64,7 @@ router.post('/', (req,res) => {
             //call function to post movie to database
             //using user given data
             postMovieFromUser();
-            //res.sendStatus(500);
+            res.sendStatus(500);
         }); 
  
     /* function to get all genres from local database */
@@ -78,7 +78,7 @@ router.post('/', (req,res) => {
         
         pool.query(getAllGenres)
             .then((results) => {
-                //console.log('results:', results.rows);
+                console.log('results:', results.rows);
                 for (name of results.rows) {
                     genreArr.push(name.name);
                 }
@@ -216,7 +216,7 @@ router.post('/', (req,res) => {
     }//end addMovieFromAPI
 
     function postMovieFromAPI(movieINFO){
-        console.log('in postMovieFromAPI', movieINFO.Title);
+        console.log('in postMovieFromAPI');
         
         useApi = true;
 
@@ -272,5 +272,22 @@ router.post('/', (req,res) => {
     /***************************/
 
 }); //end post route to add movie
+
+//GET 
+router.get('/', (req, res) =>{
+    console.log('in get newest movie');
+
+    const movieQuery = `SELECT * FROM "movies" 
+                        JOIN "genre" ON "genre"."id" = "movies"."genre_id" 
+                        ORDER BY "movies"."id" DESC LIMIT 1;`
+
+    pool.query(movieQuery)
+        .then((results) => {
+            res.send(results.rows);
+        })                    
+        .catch((error) => {
+            console.log('error getting newest movie:', error);
+        })
+})
 
 module.exports = router;

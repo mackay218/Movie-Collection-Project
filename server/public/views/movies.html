@@ -1,12 +1,13 @@
-<div class="container">
+<div class="container addMovieContainer">
     <!--form for movie input-->
         <!--ability to add new genre or pick from existing genres:
                 show/hide text input/ select option dropdown-->
     <div class="formContainer">
-        <h3>Add Movie</h3>
         <form ng-submit="vm.addMovie(vm.movieToAdd, vm.myDate, userForm$valid)" name="userForm" 
             ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }" 
+            id="addMovieForm"
             novalidate>   
+            <h3 >Add Movie</h3>
             <div class="formSection">
                 <label for="#movieTitle">Title</label>
                 <input ng-model="vm.movieToAdd.title" id="movieTitle" type="text" placeholder="e.g. Almost Famous" required/>
@@ -23,7 +24,7 @@
                 <label for="#runTime">Run Time (min)</label>
                 <input ng-model="vm.movieToAdd.run_time" id="runTime" type="number" step="1.00" placeholder="120 min" required/>
             </div>
-            <div class="formSection">
+            <div class="formSection genreSelect">
                 <div class="genrePickContainer" >
                     <!--drop down -->
                     <div class="inputChoice" ng-show="vm.isShown" >
@@ -33,7 +34,7 @@
                             <option ng-repeat="genre in vm.genresArr" value="{{genre.id}}">{{genre.name}}</option>
                         </select>
                         <p>OR</p>
-                        <md-button class="md-raised" type="button" 
+                        <md-button class="md-raised btn" type="button" 
                                 ng-click="vm.isShown = !vm.isShown; vm.movieToAdd.genre = '' "
                                 >
                                 Add New Genre
@@ -44,7 +45,7 @@
                         <label for="#newGenre">New Genre</label>
                         <input ng-model="vm.movieToAdd.genre" id="newGenre" type="text" placeholder="mystery" required/>
                         <p>OR</p>
-                        <md-button type="button" class="md-raised"
+                        <md-button type="button" class="md-raised btn"
                                  ng-click="vm.isShown = !vm.isShown; vm.movieToAdd.genre = ''" 
                                  >
                                  Select Existing Genre
@@ -52,10 +53,19 @@
                     </div>
                 </div>
             </div>
-            <div class="submitSection">
-                <md-button ng-click="vm.addMovie(vm.movieToAdd, vm.myDate, userForm$valid)" class="md-raised md-primary" ng-disabled="userForm.$invalid">Submit</md-button>
+            <div class="formSection">
+                <md-button ng-click="vm.addMovie(vm.movieToAdd, vm.myDate, userForm$valid)" class="md-raised md-primary btn" ng-disabled="userForm.$invalid">Submit</md-button>
             </div>
         </form>
     </div> 
+    <div class="newestMovieContainer">
+        <h3>Newest Addition</h3>
+        <div class="newestMovieCard" ng-repeat="movie in vm.newMovieArr">
+            <img class="newestMoviePic" src="{{movie.image_url}}">
+            <div class="newestCardInfo">
+                <h3>{{movie.title}}</h3>
+            </div>
+        </div>
+    </div>
    
 </div>

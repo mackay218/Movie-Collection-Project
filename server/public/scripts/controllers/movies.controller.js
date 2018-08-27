@@ -40,7 +40,7 @@ movieApp.controller('MoviesController', ['$http', function($http){
             }).then(function (response) {
                 console.log('added movie!');
                 getGenres();
-               
+                getNewestMovie();
                 self.movieToAdd = {};
             }).catch(function (error) {
                 console.log('error in post:', error);
@@ -82,5 +82,22 @@ movieApp.controller('MoviesController', ['$http', function($http){
      
     getGenres();
 
+    function getNewestMovie(){
+        console.log('in getNewestMovie');
+        self.newMovieArr = [];
+        $http({
+            method: 'GET',
+            url: '/movies'
+        })
+        .then(function(response){
+            console.log(response.data);
+            self.newMovieArr = response.data;
+        })
+        .catch(function(error) {
+            console.log('error getting newest movie:', error);
+        });
+    }//end getNewestMovie
+
+    getNewestMovie();
 
 }]);//end movies controller     

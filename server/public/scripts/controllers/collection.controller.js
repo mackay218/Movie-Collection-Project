@@ -90,7 +90,7 @@ movieApp.controller('CollectionController', ['$http', function($http){
         })
             .then(function (response) {
                 console.log('deleted movie:', title);
-                getMovies();
+                self.getMovies();
             })
             .catch(function (error) {
                 console.log('error in deleteMovie:', error);

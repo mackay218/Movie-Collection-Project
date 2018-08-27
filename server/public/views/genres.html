@@ -1,14 +1,16 @@
-<div class="container">
+<div class="container genreContainer">
     <h2>Genres</h2>
     <!--form for adding genre-->
     <div class="formContainer">
-        <form ng-submit="vm.addGenre(vm.genreToAdd, userForm$valid)" name="userForm"
-             ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }"
-             novalidate>
+        <form name="userForm"
+            ng-submit="vm.addGenre(vm.genreToAdd, userForm$valid)"
+            ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }"
+            novalidate>
             <input ng-model="vm.genreToAdd.name" type="text" placeholder="e.g. comedy" required/>
-            <button id="submitGenreBtn" 
+            <md-button id="submitGenreBtn" 
                 ng-disabled="userForm.$invalid"
-                class="md-raised md-primary">Submit</button>
+                ng-click="vm.addGenre(vm.genreToAdd)"
+                class="md-raised md-primary">Submit</md-button>
         </form>
     </div>
     <!--table of genres with count of movies-->
@@ -34,8 +36,8 @@
                         </button>
                         <div class="deleteGenreBox" ng-hide="genre.isHidden">
                             <p>Delete this genre?</p>
-                            <button class="yesBtn" ng-click="vm.deleteGenre(genre)">Yes</button>
-                            <button class="noBtn" ng-click="genre.isHidden = true">No</button>
+                            <button class="yesBtn genreBtns" ng-click="vm.deleteGenre(genre)">Yes</button>
+                            <button class="noBtn genreBtns" ng-click="genre.isHidden = true">No</button>
                         </div>
                     </td>
                 </tr>

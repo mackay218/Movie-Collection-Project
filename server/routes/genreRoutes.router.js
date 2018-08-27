@@ -51,9 +51,10 @@ router.post('/', (req, res) => {
                 res.sendStatus(500);
             });
         }
-    });
+    }).catch((error) => {
+        console.log('errog getting genres:', error);
+    })
 }); //end post route
-
 
 /* route to get list of genres */
 router.get('/', (req, res) => {
