@@ -18,9 +18,6 @@
             </div>
         </div>
         <div class="cardsContainer">
-            <div class="noResults" ng-hide="vm.hideWarning">
-                No Results
-            </div>
             <div class="movieCard" ng-repeat="movie in vm.moviesArr">
                 <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">
                     <p class="question">Delete this movie?</p>
