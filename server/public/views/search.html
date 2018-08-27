@@ -1,9 +1,11 @@
-<div class="container">
+<div class="searchContainer">
     <!--form for searching-->
-    <div class="collectionSection">
+    <h3>Search Collection</h3>
+    <div class="searchSection">
         <form ng-model="vm.seachTerms">
             <input ng-model="vm.searchTerms.term" type="text" placeholder="e.g. Shrek OR 2018" />
             <select ng-model="vm.searchTerms.type">
+                <option selected disabled value="">Please Select</option>
                 <option value="title">Title</option>
                 <option value="release_date">Release Date</option>
                 <option value="run_time">Run Time</option>
@@ -14,21 +16,26 @@
             </select>
             <button ng-click="vm.searchMovies(vm.searchTerms)">Search</button>
         </form>
-        <div class="searchResults">
-            <div class="movieCard" ng-repeat="movie in vm.searchArr">
-                <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">
-                    <p class="question">Delete this movie?</p>
-                    <button class="yesBtn" ng-click="vm.deleteMovie(movie.title, movie.plot)">Yes</button>
-                    <button class="noBtn" ng-click="movie.isHidden = true">No</button>
-                </div>
-                <button class="movieDeleteBtn" ng-click="movie.isHidden = !movie.isHidden"><i class="fas fa-times"></i></button>
-                <img class="moviePic" src="{{movie.image_url}}">
-                <div class="cardInfo">
-                    <p>{{movie.title}}</p>
-                    <p> released: {{movie.release_date}}</p>
-                    <p> run time: {{movie.run_time}}</p>
-                    <p>{{movie.genre}}</p>
-                </div>
+    </div>
+    <div class="searchResults">
+        <div class="noResults" 
+            ng-hide="vm.hideWarning"
+            >
+            No Results
+        </div>
+        <div class="movieCard" ng-repeat="movie in vm.searchArr">
+            <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">
+                <p class="question">Delete this movie?</p>
+                <button class="yesBtn" ng-click="vm.deleteMovie(movie.title, movie.plot)">Yes</button>
+                <button class="noBtn" ng-click="movie.isHidden = true">No</button>
+            </div>
+            <button class="movieDeleteBtn" ng-click="movie.isHidden = !movie.isHidden"><i class="fas fa-times"></i></button>
+            <img class="moviePic" src="{{movie.image_url}}">
+            <div class="cardInfo">
+                <p>{{movie.title}}</p>
+                <p> released: {{movie.release_date}}</p>
+                <p> run time: {{movie.run_time}}</p>
+                <p>{{movie.genre}}</p>
             </div>
         </div>
     </div>

@@ -3,6 +3,8 @@ movieApp.controller('SearchController', ['$http', function($http){
 
     const self = this;
 
+    self.hideWarning = true;
+
     //GET
     self.searchMovies = function(searchTerms){
         console.log('in searchMovies');
@@ -18,6 +20,15 @@ movieApp.controller('SearchController', ['$http', function($http){
         })
         .then(function(response){
             console.log('movies:', response.data);
+            console.log(response.data.length);
+
+            if(response.data.length == 0){
+                self.hideWarning = false;
+            }
+            else if(response.data.length > 0){
+                self.hideWarning = true;
+            }
+
             self.searchArr = [];
             for (let movie of response.data) {
                 let thisMovieObj = {
@@ -39,6 +50,9 @@ movieApp.controller('SearchController', ['$http', function($http){
                 console.log('all movies');
                 self.searchArr.push(thisMovieObj);
             }
+
+            
+
         })
         .catch(function(error){
             console.log('error searching:', error);

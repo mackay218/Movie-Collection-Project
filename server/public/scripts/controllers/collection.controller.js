@@ -3,6 +3,8 @@ movieApp.controller('CollectionController', ['$http', function($http){
 
     const self = this;
 
+    self.hideWarning = true;
+
     /*function to get movies to make cards on DOM */
     self.getMovies = function(genre) {
         console.log('in getMovies');
@@ -12,6 +14,7 @@ movieApp.controller('CollectionController', ['$http', function($http){
         })
             .then(function (response) {
                 console.log('movies:', response.data);
+
                 /*parse objects and 
                 add property to hold boolean for hiding confirmBox*/
                 self.moviesArr = [];
@@ -43,6 +46,13 @@ movieApp.controller('CollectionController', ['$http', function($http){
                         if(thisMovieGenreArr.includes(genre)){
                             self.moviesArr.push(thisMovieObj);
                         }
+                    }
+
+                    if (self.moviesArr.length == 0) {
+                        self.hideWarning = false;
+                    }
+                    else if (self.moviesArr.length > 0) {
+                        self.hideWarning = true;
                     }
                 }
             })
