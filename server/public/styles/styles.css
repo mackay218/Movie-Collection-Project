@@ -84,7 +84,8 @@ li:hover{
 
 .addMovieContainer{
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    height: auto;
 }
 
 .newestMovieContainer{
@@ -93,6 +94,7 @@ li:hover{
     flex-direction: column;
     align-items: center;
     text-align: center;
+    min-width: 300px;
 }
 
 .newestMovieCard{
@@ -113,11 +115,12 @@ md-datepicker{
 }
 
 #addMovieForm{
+    position: relative;
+    left: 100px;
     display: flex;
     flex-direction: column;
     width: 50vw;
     justify-content: left;
-    padding-left: 20px;
     margin: 0;
 }
 
@@ -168,6 +171,7 @@ md-datepicker{
     flex-wrap: wrap;
     overflow-y: scroll;
     border: 1px solid black;
+    padding: 30px;
 }
 
 .movieCard{
@@ -177,8 +181,8 @@ md-datepicker{
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid black;
     background-color: #333;
+    box-shadow: 5px 10px 10px rgba(0,0,0,0.2);
     color: #fff;
     margin: 5px;
 }
@@ -247,7 +251,6 @@ md-datepicker{
 .noBtn:hover{
     box-shadow: 0 0 15px rgba(255,255,255,0.8);
 }
-
 
 .sortContainer{
     display: flex;
@@ -380,4 +383,13 @@ tr:hover{
 .noResults{
     position: absolute;
     left: 42vw;
+}
+
+
+.wrongPageContainer{
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 }

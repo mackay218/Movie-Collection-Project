@@ -51,10 +51,11 @@ movieApp.controller('SearchController', ['$http', function($http){
                 self.searchArr.push(thisMovieObj);
             }
 
-            
+            self.searchTerms = {};
 
         })
         .catch(function(error){
+            self.searchTerms = {};
             console.log('error searching:', error);
         });
     }//end searchMovies
