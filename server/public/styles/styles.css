@@ -99,10 +99,13 @@ li:hover{
 
 .newestMovieCard{
     width: 30vw;
+    max-height: 200px;
 }
 
 .newestMoviePic{
     width: 30vw;
+    max-height: 70vh;
+    max-width: 350px;
     box-shadow: 5px 8px 10px rgba(0,0,0,0.2);
 }
 
@@ -177,7 +180,7 @@ md-datepicker{
 .movieCard{
     position: relative;
     width: 200px;
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -185,19 +188,21 @@ md-datepicker{
     box-shadow: 5px 10px 10px rgba(0,0,0,0.2);
     color: #fff;
     margin: 5px;
+    overflow: hidden;
 }
 
 .moviePic{
     position: absolute;
     top: 0;
     left: 0;
-    height: 60%;
+    height: 70%;
     width: 100%;
     z-index: 2;;
 }
 
 .movieCard p{
     margin: 0 0 5px 0;
+    text-align: left;
 }
 
 .movieDeleteBtn{
@@ -213,6 +218,8 @@ md-datepicker{
 .cardInfo{
     position: absolute;
     bottom: 0;
+    left: 0;
+    padding-left: 5px;
 }
 
 .confirmBox{
@@ -220,7 +227,7 @@ md-datepicker{
     top: 0;
     z-index: 3;
     background-color: rgba(0,0,0,0.5);
-    height: 60%;
+    height: 70%;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -384,7 +391,6 @@ tr:hover{
     position: absolute;
     left: 42vw;
 }
-
 
 .wrongPageContainer{
     height: 60vh;
