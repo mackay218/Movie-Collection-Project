@@ -25,7 +25,7 @@
         </div>
         <div class="movieCard" ng-repeat="movie in vm.searchArr">
             <div class="confirmBox" ng-hide="movie.isHidden" ng-init="vm.isHidden = true">
-                <p class="question">Delete this movie?</p>
+                <p class="question">Delete this show?</p>
                 <button class="yesBtn" ng-click="vm.deleteMovie(movie.title, movie.plot)">Yes</button>
                 <button class="noBtn" ng-click="movie.isHidden = true">No</button>
             </div>
