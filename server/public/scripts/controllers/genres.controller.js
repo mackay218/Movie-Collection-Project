@@ -69,11 +69,12 @@ movieApp.controller('GenresController', ['$http', function ($http) {
             })
             .then(function (response) {
                 console.log('delete genre:', genre.id);
+                getGenres();
             })
             .catch(function (error) {
                 console.log('error deleting genre:', error);
             });
-            getGenres();
+            
         }
     
     }; //end deleteGenre
