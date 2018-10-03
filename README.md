@@ -27,7 +27,7 @@ In the modules folder create a new file called ```config.js``` add the following
 ```const config = { MY_KEY: 'your_api_key_from_omdb_here' };  module.exports = config;```
 
 ## Screen Shot
-![Screen Shot](public/images/screen_shot.png)
+![Screen Shot](server/public/images/screen_shot.png)
 
 ## Features
 
