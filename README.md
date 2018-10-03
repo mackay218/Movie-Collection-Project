@@ -1,8 +1,18 @@
 # Movie-Collection-Project
 
+    This is an application to add and store information about movies. It also keeps track of the number of movies in each genre. 
+
+## Built With
+    - HTML5
+    - CSS3
+    - AngularJS
+    - NodeJS
+    - ExpressJS
+    - OMDB API
+
 ## Getting Started
 
-This is an application to add and store information about movies.
+
 Fork and clone the respository.
 
 Run ```npm install express```  and ```npm install pg``` in terminal to set up the server side and database.
@@ -10,11 +20,14 @@ Run ```npm install express```  and ```npm install pg``` in terminal to set up th
 Run ```npm install axios``` in terminal to set up calls to the ombd api.
 
 Create a database called ```movie_collection``` and run the sql queries found in database.sql.
-Go to http://www.omdbapi.com/apikey.aspx to get an API KEY.
+Go to http://www.omdbapi.com/apikey.aspx to get an API KEY. Make sure 
 
 In the modules folder create a new file called ```config.js``` add the following code to the file.
 
-```const config = { MY_KEY: 'your_api_key_from_omdb_here' }  module.exports = config```
+```const config = { MY_KEY: 'your_api_key_from_omdb_here' };  module.exports = config;```
+
+## Screen Shot
+![Screen Shot](public/images/screen_shot.png)
 
 ## Features
 

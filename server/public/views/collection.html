@@ -11,7 +11,7 @@
                     ng-model="vm.genre"
                     ng-change="vm.getMovies(vm.genre)" 
                     id="genrePicker">
-                    <option value="">Please select</option>
+                    <option selected value="">Please select</option>
                     <option value="allMovies">All</option>
                     <option ng-repeat="genre in vm.genresArr" value="{{genre.name}}">{{genre.name}}</option>
                 </select>

@@ -37,7 +37,7 @@ router.post('/', (req, res) => {
             console.log('genre already in database');
             res.sendStatus(200);
         }
-        else{
+        else{c
             //query to add new genre
             const genreQueryText = `INSERT INTO "genre" ("name") VALUES ($1);`;
 

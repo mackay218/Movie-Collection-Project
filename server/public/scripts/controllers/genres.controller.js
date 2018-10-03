@@ -12,7 +12,7 @@ movieApp.controller('GenresController', ['$http', function ($http) {
             url: '/genres',
             data: genreToAdd
         })
-        .then(function(response){
+        .then(function(respo nse){
             console.log('added genre', genreToAdd);
             getGenres();
             self.genreToAdd = {};
